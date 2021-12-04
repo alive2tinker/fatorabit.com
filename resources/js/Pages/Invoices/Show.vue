@@ -14,7 +14,7 @@
                     {{ $t("Invoice") + " " + invoice.data.title ?? "" }}
                 </h2>
                 <a
-                    :href="route('invoices.printPdf', invoice.data.id)"
+                    :href="route('invoices.printPdf', invoice.data.uuid)"
                     class="bg-indigo-500 text-white px-4 py-2"
                 >
                     <svg

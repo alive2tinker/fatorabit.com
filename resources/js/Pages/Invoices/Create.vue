@@ -395,7 +395,7 @@
                                     </label>
                                     <div class="mt-1">
                                         <input
-                                            type="text"
+                                            type="number"
                                             name="street-address"
                                             id="street-address"
                                             autocomplete="street-address"

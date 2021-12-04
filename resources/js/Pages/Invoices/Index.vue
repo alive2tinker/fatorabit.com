@@ -203,7 +203,7 @@
                                                 "
                                             >
                                                 <Link
-                                                    :href="route('invoices.show', invoice)"
+                                                    :href="route('invoices.show', invoice.uuid)"
                                                     class="
                                                         text-green-600
                                                         hover:text-green-900

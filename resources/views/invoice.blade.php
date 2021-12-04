@@ -77,7 +77,7 @@
             <img src="{{ $qrcode }}" alt="">
         </div>
         <div class="max-w-xl mx-auto py-4 bg-gray-200 rounded-md mt-5"><p class="text-gray-600 text-center">{{ __('this invoice was created with love by') }} <a href="/">{{ __('Fatorabit') }}</a></p></div>
-        <p class="text-center">{{ __('You can view this invoice @ ')}} <a href="{{route('invoices.print', $invoice->id)}}">{{route('invoices.print', $invoice->id)}}</a></p>
+        <p class="text-center">{{ __('You can view this invoice @ ')}} <a href="{{route('invoices.print', $invoice->uuid)}}">{{route('invoices.print', $invoice->id)}}</a></p>
     </div>
 </body>
 

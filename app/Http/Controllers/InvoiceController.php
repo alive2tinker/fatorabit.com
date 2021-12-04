@@ -155,7 +155,7 @@ class InvoiceController extends Controller
         //new code
         $filename = $invoice->toContact . " invoice";
 
-        Browsershot::url(route('invoices.print', $invoice->id))
+        Browsershot::url(route('invoices.print', $invoice->uuid))
         ->noSandbox()
         ->waitUntilNetworkIdle()
         ->save(storage_path("app/invoices/$filename.pdf"));
