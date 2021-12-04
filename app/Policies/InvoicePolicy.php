@@ -18,7 +18,7 @@ class InvoicePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -30,7 +30,7 @@ class InvoicePolicy
      */
     public function view(User $user, Invoice $invoice)
     {
-        //
+        return $user->id === $invoice->user->id || $user->role === 'admin';
     }
 
     /**
@@ -41,7 +41,7 @@ class InvoicePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasActiveSubscription() || $user->role === 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class InvoicePolicy
      */
     public function update(User $user, Invoice $invoice)
     {
-        //
+        return false;
     }
 
     /**
@@ -65,7 +65,7 @@ class InvoicePolicy
      */
     public function delete(User $user, Invoice $invoice)
     {
-        //
+        return false;
     }
 
     /**
@@ -77,7 +77,7 @@ class InvoicePolicy
      */
     public function restore(User $user, Invoice $invoice)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +89,6 @@ class InvoicePolicy
      */
     public function forceDelete(User $user, Invoice $invoice)
     {
-        //
+        return false;
     }
 }

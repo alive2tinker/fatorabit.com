@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,7 +32,8 @@ class User extends Authenticatable
         'type',
         'phone',
         'expiryDate',
-        'logo'
+        'logo',
+        'role'
     ];
 
     /**
@@ -64,6 +66,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    protected $dates = ['expiryDate'];
+
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
@@ -72,5 +76,10 @@ class User extends Authenticatable
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function hasActiveSubscription()
+    {
+        return $this->expiryDate < Carbon::now();
     }
 }
