@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Invoices;
+use App\Nova\Metrics\InvoicesTotal;
+use App\Nova\Metrics\Users;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
@@ -56,7 +59,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+            new Users(),
+            new Invoices(),
+            new InvoicesTotal()
         ];
     }
 
