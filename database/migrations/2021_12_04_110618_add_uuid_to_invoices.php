@@ -26,7 +26,7 @@ class AddUuidToInvoices extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            //
+            $table->dropColumn('uuid');
         });
     }
 }
