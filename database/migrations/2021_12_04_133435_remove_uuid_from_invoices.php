@@ -13,10 +13,12 @@ class RemoveUuidFromInvoices extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn('uuid');
-            $table->dropUnique('uuid');
-        });
+        if(Schema::hasColumn('invoices', 'uuid')){
+            Schema::table('invoices', function (Blueprint $table) {
+                $table->dropColumn('uuid');
+                $table->dropUnique('uuid');
+            });
+        }
     }
 
     /**

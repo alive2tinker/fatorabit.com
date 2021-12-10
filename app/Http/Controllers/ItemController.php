@@ -45,7 +45,8 @@ class ItemController extends Controller
         Auth::user()->items()->create([
             'name' => $request->input('name'),
             'unit_price' => $request->input('unitPrice'),
-            'vat_inclusive' => $request->input('vatInclusive')
+            // 'vat_inclusive' => $request->input('vatInclusive'),
+            'vatInclusive' => $request->input('vatInclusive')
         ]);
 
         return redirect()->route('items.index')->with('success', trans('item created successfully'));

@@ -18,7 +18,7 @@ class ItemResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'unitPrice' => $this->unit_price,
-            'vatInclusive' => $this->vat_inclusive,
+            'vatInclusive' => $this->vatInclusive,
             'created' => $this->created_at->format('d/m/Y h:i:s')
         ];
     }

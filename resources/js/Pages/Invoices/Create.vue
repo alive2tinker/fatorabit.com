@@ -288,6 +288,33 @@
                                             font-medium
                                             text-gray-700
                                         "
+                                        >{{ $t("Customer VAT Number") }}</label
+                                    >
+                                    <div class="mt-1">
+                                        <input
+                                            type="text"
+                                            id="email"
+                                            :class="{
+                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'border-red-500':
+                                                    errors.customerVat,
+                                            }"
+                                            v-model="newInvoiceForm.customerVat"
+                                        />
+                                        <p class="font-extralight text-red-500">
+                                            {{ $t(errors.customerVat) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label
+                                        for="email"
+                                        class="
+                                            block
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                        "
                                         >{{ $t("Address") }}</label
                                     >
                                     <div class="mt-1">
@@ -639,6 +666,7 @@ export default defineComponent({
                 to: "",
                 address: "",
                 toContact: "",
+                customerVat:"",
                 notes: "",
                 subtotal: 0,
                 vat: 0,
@@ -709,10 +737,10 @@ export default defineComponent({
                     parseInt(item.item.unitPrice) * event.target.value;
                 let vat =
                     parseInt(item.item.unitPrice) * event.target.value * 0.15;
-                let total = subtotal + (!item.item.vatInclusive ? vat : 0);
+                let total = subtotal + (item.item.vatInclusive !== 'inclusive' ? vat : 0);
 
                 item.subtotal = subtotal;
-                item.vat = !item.item.vatInclusive ? vat : 0;
+                item.vat = item.item.vatInclusive !== 'inclusive' ? vat : 0;
                 item.total = total;
             } else {
                 alert("not sufficient");

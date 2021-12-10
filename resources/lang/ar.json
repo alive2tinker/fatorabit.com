@@ -107,5 +107,6 @@
     "You don't have an account? register here":"ليس لديك حساب؟ قم بتسجيل جديد من هنا",
     "From the blog":"من المدونة",
     "Tips and tricks on how to master invoice creation successfully":"نصائح وحيل حول كيفية إتقان إنشاء الفاتورة بنجاح",
-    "Create Item": "انشئ صنف"
+    "Create Item": "انشئ صنف",
+    "Customer VAT Number":"الرقم الضريبي للمستلم (العميل)"
 }

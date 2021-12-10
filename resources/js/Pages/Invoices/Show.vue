@@ -13,25 +13,7 @@
                 >
                     {{ $t("Invoice") + " " + invoice.data.title ?? "" }}
                 </h2>
-                <a
-                    :href="route('invoices.printPdf', invoice.data.uuid)"
-                    class="bg-indigo-500 text-white px-4 py-2"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-                        />
-                    </svg>
-                </a>
+                <PDF />
             </div>
         </template>
 
@@ -279,12 +261,14 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import PDF from "@/components/PDF.vue";
 export default defineComponent({
     props: {
         invoice: Object,
     },
     components: {
         AppLayout,
+        PDF
     },
 });
 </script>

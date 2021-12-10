@@ -14,7 +14,8 @@ class Item extends Model
         'name',
         'unit_price',
         'vat_inclusive',
-        'user_id'
+        'user_id',
+        'vatInclusive'
     ];
 
     public function user()

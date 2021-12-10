@@ -20,7 +20,8 @@ class Invoice extends Model
         'address',
         'toContact',
         'notes',
-        'reference'
+        'reference',
+        'customer_vat'
     ];
 
     public function user()

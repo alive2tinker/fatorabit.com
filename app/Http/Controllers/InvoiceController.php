@@ -65,7 +65,8 @@ class InvoiceController extends Controller
                 'to' => $request->input('to'),
                 'toContact' => $request->input('toContact'),
                 'notes' => $request->input('notes'),
-                'reference' => "INV-".Carbon::now()->format('yymd-h-m')
+                'reference' => "INV-".Carbon::now()->format('yymd-h-m'),
+                'customer_vat' => $request->input('customerVat')
             ]);
 
             foreach ($request->input('items') as $invoiceItem) {

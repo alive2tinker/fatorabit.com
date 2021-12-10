@@ -35,7 +35,8 @@ class StoreInvoiceRequest extends FormRequest
             'subtotal' => "required",
             'total' => "required",
             'vat' => "required",
-            'to' => "required"
+            'to' => "required",
+            'customerVat' => "required|numeric"
         ];
     }
 }
