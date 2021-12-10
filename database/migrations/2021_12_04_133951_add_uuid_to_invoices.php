@@ -13,9 +13,11 @@ class AddUuidToInvoices extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->uuid('uuid')->unique();
-        });
+        if(!Schema::hasColumn('invoices','uuid')){
+            Schema::table('invoices', function (Blueprint $table) {
+                $table->uuid('uuid')->unique();
+            });
+        }
     }
 
     /**
