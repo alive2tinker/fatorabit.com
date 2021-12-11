@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2859ae66390207262c7cf2ba0772a07",
+    "content-hash": "46025935651e53c87cc83086fdad7c5c",
     "packages": [
         {
             "name": "alive2tinker/transwire",
@@ -2049,6 +2049,51 @@
                 }
             ],
             "time": "2020-06-13T08:05:20+00:00"
+        },
+        {
+            "name": "kraftbit/nova-tinymce5-editor",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kraftbit/nova-tinymce5-editor.git",
+                "reference": "b00ff482dffcbdb425b775f17e69012edab8bf58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kraftbit/nova-tinymce5-editor/zipball/b00ff482dffcbdb425b775f17e69012edab8bf58",
+                "reference": "b00ff482dffcbdb425b775f17e69012edab8bf58",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kraftbit\\NovaTinymce5Editor\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kraftbit\\NovaTinymce5Editor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/Kraftbit/nova-tinymce5-editor/issues",
+                "source": "https://github.com/Kraftbit/nova-tinymce5-editor/tree/v1.0.0"
+            },
+            "time": "2020-09-21T15:07:16+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -10456,5 +10501,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
