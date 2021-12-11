@@ -266,14 +266,12 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import PDF from "@/components/PDF.vue"
 export default defineComponent({
     props: {
         invoice: Object,
     },
     components: {
         AppLayout,
-        PDF
     },
     methods: {
         printPdf(){
