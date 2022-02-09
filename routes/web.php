@@ -60,9 +60,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         ]);
     });
 
+    Route::middleware('auth:sanctum')->get('/subscriptions/upgrade', [\App\Http\Controllers\SubscriptionController::class, 'upgrade'])->name('subscriptions.upgrade');
+
     Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         return Inertia::render('Dashboard', [
             'stats' => [
+                [
+                    'name' => "customers",
+                    'stat' => Auth::user()->customers->count()
+                ],
                 [
                     'name' => "Invoices",
                     'stat' => Auth::user()->invoices->count()

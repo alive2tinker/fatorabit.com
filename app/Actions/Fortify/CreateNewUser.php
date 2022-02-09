@@ -35,7 +35,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             'phone' => $input['phone'],
             'logo' => $input['logo'],
-            'expiryDate' => Carbon::now()->addMonths(12),
+            'expiryDate' => Carbon::now()->addDays(14),
             'vatRegistration' => $input['vatRegistration'],
         ]);
     }

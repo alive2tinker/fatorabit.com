@@ -64,6 +64,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'invoiceCount'
     ];
 
     protected $dates = ['expiryDate'];
@@ -86,5 +87,10 @@ class User extends Authenticatable
     public function customers()
     {
         return $this->hasMany(Customer::class);
+    }
+
+    public function getInvoiceCountAttribute()
+    {
+        return $this->invoices()->count();
     }
 }

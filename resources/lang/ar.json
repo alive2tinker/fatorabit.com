@@ -108,5 +108,11 @@
     "From the blog":"من المدونة",
     "Tips and tricks on how to master invoice creation successfully":"نصائح وحيل حول كيفية إتقان إنشاء الفاتورة بنجاح",
     "Create Item": "انشئ صنف",
-    "Customer VAT Number":"الرقم الضريبي للمستلم (العميل)"
+    "Customer VAT Number":"الرقم الضريبي للمستلم (العميل)",
+    "customers": "العملاء",
+    "Annually": "/ سنويا",
+    "SAR": "ريال سعودي",
+    "Standard": "القياسية",
+    "Enterprise": "الشركات",
+    "Subscription Upgrade": "ترقية الاشتراك"
 }

@@ -15,7 +15,7 @@ class UpdateUserFields extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('vatRegistration');
-            $table->enum('type', ['free','premium']);
+            $table->enum('type', ['premium','free']);
             $table->string('phone');
             $table->date('expiryDate')->nullable();
             $table->string('logo')->nullable();
