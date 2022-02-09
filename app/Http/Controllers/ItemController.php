@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvoiceItem;
 use App\Models\Item;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
@@ -44,6 +45,7 @@ class ItemController extends Controller
     {
         Auth::user()->items()->create([
             'name' => $request->input('name'),
+            'name_ar' => $request->input('nameAr'),
             'unit_price' => $request->input('unitPrice'),
             // 'vat_inclusive' => $request->input('vatInclusive'),
             'vatInclusive' => $request->input('vatInclusive')
@@ -104,7 +106,11 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
 
-        if($item->invoiceItems()->count() > 0){
+        $invoiceItems = InvoiceItem::where([
+            ['deleted_at',null],
+            ['item_id', $item->id]
+        ])->count();
+        if($invoiceItems > 0){
             return redirect()->back()->withErrors(trans("item {$item->name} has previous invoices"));
         }
         $item->delete();

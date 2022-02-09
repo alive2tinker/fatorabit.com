@@ -12,6 +12,7 @@
     "Name": "الاسم",
     "Unit Price": "سعر الوحدة",
     "Vat Inclusive": "شامل الضريبة",
+    "Vat Exclusive": "غير شامل الضريبة",
     "Dismiss": "اغلاق",
     "Save": "حفظ",
     "Cancel": "الغاء",
@@ -108,6 +109,8 @@
     "From the blog":"من المدونة",
     "Tips and tricks on how to master invoice creation successfully":"نصائح وحيل حول كيفية إتقان إنشاء الفاتورة بنجاح",
     "Create Item": "انشئ صنف",
+    "Customer VAT Number":"الرقم الضريبي للمستلم (العميل)",
+    "Item Name (Arabic)": "اسم المنتج (عربي)"
     "Customer VAT Number":"الرقم الضريبي للمستلم (العميل)",
     "customers": "العملاء",
     "Annually": "/ سنويا",

@@ -25,6 +25,7 @@ class StoreItemRequest extends FormRequest
     {
         return [
             'name' => "required",
+            'nameAr' => "required",
             'unitPrice' => "required",
             'vatInclusive' => "required"
         ];

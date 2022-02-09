@@ -142,6 +142,9 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
+        foreach($invoice->items as $invoiceItem){
+            $invoiceItem->delete();
+        }
         $invoice->delete();
 
         return redirect()->route('invoices.index')->with('success', trans('invoice deleted successfully'));

@@ -93,7 +93,52 @@
                                             </p>
                                         </div>
                                     </div>
-
+                                    <div
+                                        class="
+                                            sm:grid
+                                            sm:grid-cols-3
+                                            sm:gap-4
+                                            sm:items-start
+                                            sm:border-t
+                                            sm:border-gray-200
+                                            sm:pt-5
+                                        "
+                                    >
+                                        <label
+                                            for="first-name"
+                                            class="
+                                                block
+                                                text-sm
+                                                font-medium
+                                                text-gray-700
+                                                sm:mt-px sm:pt-2
+                                            "
+                                        >
+                                            {{ $t("Item Name (Arabic)") }}
+                                        </label>
+                                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                            <input
+                                                type="text"
+                                                id="first-name"
+                                                autocomplete="given-name"
+                                                :class="{
+                                                    ' max-w-lg block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
+                                                    'border-red-500':
+                                                        errors.nameAr !==
+                                                        undefined,
+                                                }"
+                                                v-model="newItemForm.nameAr"
+                                            />
+                                            <p
+                                                class="
+                                                    font-extralight
+                                                    text-red-500
+                                                "
+                                            >
+                                                {{ $t(errors.nameAr) }}
+                                            </p>
+                                        </div>
+                                    </div>
                                     <div
                                         class="
                                             sm:grid
@@ -182,7 +227,7 @@
                                                 <option value="yes">
                                                     {{ $t("Yes") }}
                                                 </option>
-                                                <option value="inclusive">{{ $t('VAT Inclusive') }}</option>
+                                                <option value="inclusive">{{ $t('Vat Exclusive') }}</option>
                                             </select>
                                             <p
                                                 class="
@@ -280,6 +325,7 @@ export default defineComponent({
         return {
             newItemForm: useForm({
                 name: "",
+                nameAr: "",
                 unitPrice: "",
                 vatInclusive: "",
             }),
