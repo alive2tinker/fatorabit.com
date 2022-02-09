@@ -84,7 +84,7 @@
                                             class="
                                                 text-sm
                                                 font-medium
-                                                text-indigo-600
+                                                text-teal-600
                                             "
                                         >
                                             <a v-for="category in post.categories" :key="category.id" href="#" class="hover:underline">

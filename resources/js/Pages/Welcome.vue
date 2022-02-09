@@ -175,15 +175,15 @@
                             shadow-sm
                             px-4
                             py-2
-                            bg-indigo-600
+                            bg-teal-600
                             text-base
                             font-medium
                             text-white
-                            hover:bg-indigo-700
+                            hover:bg-teal-700
                             focus:outline-none
                             focus:ring-2
                             focus:ring-offset-2
-                            focus:ring-indigo-500
+                            focus:ring-teal-500
                             sm:text-sm
                         "
                     >
@@ -256,7 +256,7 @@
             </div>
 
             <div class="sm:hidden py-4 w-full flex px-4">
-                <Link :href="route('login')" class="bg-indigo-500 text-white px-4 py-2 w-full text-center rounded">{{ $t('Log in') }}</Link>
+                <Link :href="route('login')" class="bg-teal-500 text-white px-4 py-2 w-full text-center rounded">{{ $t('Log in') }}</Link>
             </div>
             <div
                 class="

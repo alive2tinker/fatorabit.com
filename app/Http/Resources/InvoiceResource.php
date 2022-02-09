@@ -24,9 +24,7 @@ class InvoiceResource extends JsonResource
             'vatTotal' => $this->vatTotal,
             'total' => $this->total,
             'title' => $this->title,
-            'to' => $this->to,
-            'toContact' => $this->toContact,
-            'address' => $this->address,
+            'customer' => $this->customer,
             'created' => $this->created_at->format('d/m/Y h:i:s'),
             'items' => InvoiceItem::with('item')->where('invoice_id', $this->id)->get()
         ];

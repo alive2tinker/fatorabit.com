@@ -21,7 +21,8 @@ class Invoice extends Model
         'toContact',
         'notes',
         'reference',
-        'customer_vat'
+        'customer_vat',
+        'customer_id'
     ];
 
     public function user()
@@ -32,5 +33,10 @@ class Invoice extends Model
     public function items()
     {
         return $this->hasMany(InvoiceItem::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

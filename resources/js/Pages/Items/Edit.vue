@@ -80,8 +80,8 @@
                                                     block
                                                     w-full
                                                     shadow-sm
-                                                    focus:ring-indigo-500
-                                                    focus:border-indigo-500
+                                                    focus:ring-teal-500
+                                                    focus:border-teal-500
                                                     sm:max-w-xs sm:text-sm
                                                     border-gray-300
                                                     rounded-md
@@ -124,8 +124,8 @@
                                                     block
                                                     w-full
                                                     shadow-sm
-                                                    focus:ring-indigo-500
-                                                    focus:border-indigo-500
+                                                    focus:ring-teal-500
+                                                    focus:border-teal-500
                                                     sm:max-w-xs sm:text-sm
                                                     border-gray-300
                                                     rounded-md
@@ -165,8 +165,8 @@
                                                     max-w-lg
                                                     w-full
                                                     shadow-sm
-                                                    focus:ring-indigo-500
-                                                    focus:border-indigo-500
+                                                    focus:ring-teal-500
+                                                    focus:border-teal-500
                                                     sm:text-sm
                                                     border-gray-300
                                                     rounded-md
@@ -217,7 +217,7 @@
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-indigo-500
+                                        focus:ring-teal-500
                                     "
                                 >
                                     {{ $t("Cancel") }}
@@ -236,12 +236,12 @@
                                         font-medium
                                         rounded-md
                                         text-white
-                                        bg-indigo-600
-                                        hover:bg-indigo-700
+                                        bg-teal-600
+                                        hover:bg-teal-700
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-indigo-500
+                                        focus:ring-teal-500
                                     "
                                 >
                                     {{ $t("Save") }}

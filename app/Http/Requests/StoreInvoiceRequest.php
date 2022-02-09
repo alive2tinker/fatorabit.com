@@ -30,13 +30,13 @@ class StoreInvoiceRequest extends FormRequest
             'items.*.vat' => "required",
             'items.*.total' => "required",
             'title' => "required",
-            'address' => "required",
-            'toContact' => "required",
+            'customer.address' => "required_if:customerId,new",
+            'customer.phone' => "required_if:customerId,new",
             'subtotal' => "required",
             'total' => "required",
             'vat' => "required",
-            'to' => "required",
-            'customerVat' => "required|numeric"
+            'customer.name' => "required_if:customerId,new",
+            'customer.vatRegistration' => "nullable|numeric"
         ];
     }
 }

@@ -647,7 +647,11 @@
 
             <!-- Page Content -->
             <main>
-                <site-alert :alert="$page.props.flash" :errors="$page.props.errors"/>
+                <div class="max-w-7xl mx-auto">
+                    <alert :message="$page.props.flash.success" type="success" />
+                    <alert v-for="error in $page.props.errors" :key="error" :message="error" type="danger"/>
+                </div>
+<!--                <site-alert :alert="$page.props.flash" :errors="$page.props.errors"/>-->
                 <slot></slot>
             </main>
         </div>
@@ -664,6 +668,7 @@ import JetNavLink from "@/Jetstream/NavLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import SiteAlert from "../components/SiteAlert.vue";
+import Alert from "@/components/Alert";
 
 export default defineComponent({
     props: {
@@ -671,6 +676,7 @@ export default defineComponent({
     },
 
     components: {
+        Alert,
         Head,
         JetApplicationMark,
         JetBanner,

@@ -144,15 +144,15 @@
                                 shadow-sm
                                 px-4
                                 py-2
-                                bg-indigo-600
+                                bg-teal-600
                                 text-base
                                 font-medium
                                 text-white
-                                hover:bg-indigo-700
+                                hover:bg-teal-700
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-offset-2
-                                focus:ring-indigo-500
+                                focus:ring-teal-500
                                 sm:text-sm
                             "
                         >
@@ -207,13 +207,44 @@
                                             type="text"
                                             autocomplete="address-level1"
                                             :class="{
-                                                'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
+                                                'max-w-lg block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
                                                 'border-red-500': errors.title,
                                             }"
                                             v-model="newInvoiceForm.title"
                                         />
                                         <p class="font-extralight text-red-500">
                                             {{ $t(errors.title) }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" v-if="customers.length > 0">
+                                <div>
+                                    <label
+                                        for="region"
+                                        class="
+                                            block
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            sm:mt-px sm:pt-2
+                                        "
+                                    >
+                                        {{ $t("Customer") }}
+                                    </label>
+                                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                        <select
+                                            :class="{
+                                                'max-w-lg block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
+                                                'border-red-500': errors.customerId,
+                                            }"
+                                            v-model="newInvoiceForm.customerId"
+                                        >
+                                            <option v-for="(customer, index) in customers" :key="index" :value="customer.id">{{ customer.name}}</option>
+                                            <option value="new">New Customer</option>
+                                        </select>
+                                        <p class="font-extralight text-red-500">
+                                            {{ $t(errors.customerId) }}
                                         </p>
                                     </div>
                                 </div>
@@ -225,6 +256,7 @@
                                     my-2
                                     gap-2
                                 "
+                                v-if="customers.length === 0 || newInvoiceForm.customerId === 'new'"
                             >
                                 <div>
                                     <label
@@ -242,13 +274,14 @@
                                             type="text"
                                             id="email"
                                             :class="{
-                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
                                                 'border-red-500': errors.to,
                                             }"
-                                            v-model="newInvoiceForm.to"
+                                            v-model="newInvoiceForm.customer.name"
                                         />
                                         <p class="font-extralight text-red-500">
-                                            {{ $t(errors.to) }}
+                                            {{ $t(errors["customer.name"]) }}
+
                                         </p>
                                     </div>
                                 </div>
@@ -268,14 +301,14 @@
                                             type="text"
                                             id="email"
                                             :class="{
-                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
                                                 'border-red-500':
                                                     errors.toContact,
                                             }"
-                                            v-model="newInvoiceForm.toContact"
+                                            v-model="newInvoiceForm.customer.phone"
                                         />
                                         <p class="font-extralight text-red-500">
-                                            {{ $t(errors.toContact) }}
+                                            {{ $t(errors["customer.phone"]) }}
                                         </p>
                                     </div>
                                 </div>
@@ -295,14 +328,14 @@
                                             type="text"
                                             id="email"
                                             :class="{
-                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
                                                 'border-red-500':
-                                                    errors.customerVat,
+                                                    errors['customer.vatRegistration'],
                                             }"
-                                            v-model="newInvoiceForm.customerVat"
+                                            v-model="newInvoiceForm.customer.vatRegistration"
                                         />
                                         <p class="font-extralight text-red-500">
-                                            {{ $t(errors.customerVat) }}
+                                            {{ $t(errors["customer.vatRegistration"]) }}
                                         </p>
                                     </div>
                                 </div>
@@ -320,17 +353,17 @@
                                     <div class="mt-1">
                                         <textarea
                                             :class="{
-                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
                                                 'border-red-500':
-                                                    errors.address,
+                                                    errors['customer.address'],
                                             }"
                                             id=""
                                             cols="30"
                                             rows="4"
-                                            v-model="newInvoiceForm.address"
+                                            v-model="newInvoiceForm.customer.address"
                                         ></textarea>
                                         <p class="font-extralight text-red-500">
-                                            {{ $t(errors.address) }}
+                                            {{ $t(errors["customer.address"]) }}
                                         </p>
                                     </div>
                                 </div>
@@ -349,8 +382,8 @@
                                         <textarea
                                             class="
                                                 shadow-sm
-                                                focus:ring-indigo-500
-                                                focus:border-indigo-500
+                                                focus:ring-teal-500
+                                                focus:border-teal-500
                                                 block
                                                 w-full
                                                 sm:text-sm
@@ -427,7 +460,7 @@
                                             id="street-address"
                                             autocomplete="street-address"
                                             :class="{
-                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
                                                 'border-red-500':
                                                     errors[
                                                         'items.' +
@@ -591,7 +624,7 @@
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-indigo-500
+                                        focus:ring-teal-500
                                     "
                                 >
                                     {{ $t("Cancel") }}
@@ -610,12 +643,12 @@
                                         font-medium
                                         rounded-md
                                         text-white
-                                        bg-indigo-600
-                                        hover:bg-indigo-700
+                                        bg-teal-600
+                                        hover:bg-teal-700
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-indigo-500
+                                        focus:ring-teal-500
                                     "
                                 >
                                     {{ $t("Save") }}
@@ -633,12 +666,11 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
-import SearchSelect from "../../components/SearchSelect.vue";
-
 export default defineComponent({
     props: {
         items: Object,
         errors: Object,
+        customers: Object
     },
     components: {
         AppLayout,
@@ -663,10 +695,13 @@ export default defineComponent({
         return {
             newInvoiceForm: useForm({
                 title: "",
-                to: "",
-                address: "",
-                toContact: "",
-                customerVat:"",
+                customer: {
+                    name: "",
+                    address: "",
+                    phone: "",
+                    vatRegistration:"",
+                },
+                customerId: '',
                 notes: "",
                 subtotal: 0,
                 vat: 0,
@@ -748,4 +783,6 @@ export default defineComponent({
         },
     },
 });
+
+import SearchSelect from "../../components/SearchSelect.vue";
 </script>

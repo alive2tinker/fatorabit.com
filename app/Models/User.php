@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->expiryDate < Carbon::now();
     }
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
 }

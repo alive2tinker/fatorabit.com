@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
@@ -55,17 +56,25 @@ class InvoiceController extends Controller
     public function store(StoreInvoiceRequest $request)
     {
         DB::transaction(function () use ($request) {
+            $customer = null;
+            if($request->has('customerId')){
+                $customer = Customer::find($request->input('customerId'));
+            }else{
+                $customer = Customer::create([
+                    'name' => $request->input('customer')['name'],
+                    'address' => $request->input('customer')['address'],
+                    'phone' => $request->input('customer')['phone'],
+                    'vatRegistration' => $request->input('customer')['vatRegistration']
+                ]);
+            }
             $invoice = Auth::user()->invoices()->create([
                 'subtotal' => $request->input('subtotal'),
                 'vatTotal' => $request->input('vat'),
                 'total' => $request->input('total'),
                 'title' => $request->input('title'),
-                'address' => $request->input('address'),
-                'to' => $request->input('to'),
-                'toContact' => $request->input('toContact'),
+                'customer_id' => $customer->id,
                 'notes' => $request->input('notes'),
                 'reference' => "INV-".Carbon::now()->format('yymd-h-m'),
-                'customer_vat' => $request->input('customerVat')
             ]);
 
             foreach ($request->input('items') as $invoiceItem) {

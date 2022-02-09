@@ -76,7 +76,7 @@
                                                 id="first-name"
                                                 autocomplete="given-name"
                                                 :class="{
-                                                    ' max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
+                                                    ' max-w-lg block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
                                                     'border-red-500':
                                                         errors.name !==
                                                         undefined,
@@ -122,7 +122,7 @@
                                                 type="number"
                                                 step="0.01"
                                                 :class="{
-                                                    'max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
+                                                    'max-w-lg block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
                                                     'border-red-500':
                                                         errors.unitPrice,
                                                 }"
@@ -165,7 +165,7 @@
                                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                                             <select
                                                 :class="{
-                                                    'block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md': true,
+                                                    'block max-w-lg w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md': true,
                                                     'border-red-500':
                                                         errors.vatInclusive,
                                                 }"
@@ -226,7 +226,7 @@
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-indigo-500
+                                        focus:ring-teal-500
                                     "
                                 >
                                     {{ $t("Cancel") }}
@@ -245,12 +245,12 @@
                                         font-medium
                                         rounded-md
                                         text-white
-                                        bg-indigo-600
-                                        hover:bg-indigo-700
+                                        bg-teal-600
+                                        hover:bg-teal-700
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-indigo-500
+                                        focus:ring-teal-500
                                     "
                                 >
                                     {{ $t("Save") }}

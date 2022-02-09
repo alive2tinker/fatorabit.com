@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight inline mt-3">
                 {{ $t("Invoices") }}
             </h2>
-            <Link :href="route('invoices.create')" v-if="invoices.data.length > 0" class="text-white bg-indigo-500 px-6 py-2 rounded">
+            <Link :href="route('invoices.create')" v-if="invoices.data.length > 0" class="text-white bg-teal-500 px-6 py-2 rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
@@ -225,8 +225,8 @@
                                                 <Link
                                                     :href="route('invoices.edit', invoice)"
                                                     class="
-                                                        text-indigo-600
-                                                        hover:text-indigo-900
+                                                        text-teal-600
+                                                        hover:text-teal-900
                                                     "
                                                     >{{
                                                         $t("Edit")
@@ -269,7 +269,7 @@
                         focus:outline-none
                         focus:ring-2
                         focus:ring-offset-2
-                        focus:ring-indigo-500
+                        focus:ring-teal-500
                     "
                 >
                     <svg

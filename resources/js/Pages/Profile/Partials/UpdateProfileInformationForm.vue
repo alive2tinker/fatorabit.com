@@ -44,8 +44,7 @@
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="name" value="Name" />
-                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" readonly disabled="true"/>
-                <jet-input-error :message="form.errors.name" class="mt-2" />
+                <p class="text-md">{{ form.name }}</p>
             </div>
 
             <!-- Email -->
@@ -63,8 +62,7 @@
             <!-- VAT Number -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="vatRegistration" value="VAT Number" />
-                <jet-input id="vatRegistration" type="text" class="mt-1 block w-full" v-model="form.vatRegistration" readonly disabled="true"/>
-                <jet-input-error :message="form.errors.vatRegistration" class="mt-2" />
+                <p class="text-md">{{ form.vatRegistration }}</p>
             </div>
         </template>
 

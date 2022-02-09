@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight inline mt-3">
                 {{ $t("Items") }}
             </h2>
-            <Link :href="route('items.create')" v-if="items.data.length > 0" class="text-white bg-indigo-500 px-6 py-2 rounded">
+            <Link :href="route('items.create')" v-if="items.data.length > 0" class="text-white bg-teal-500 px-6 py-2 rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
@@ -13,8 +13,11 @@
             </div>
         </template>
 
+
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<!--                <alert v-for="(error) in $page.props.errors" :message="error" :type="'danger'"/>-->
                 <!-- This example requires Tailwind CSS v2.0+ -->
                 <div class="flex flex-col" v-if="items.data.length > 0">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -179,8 +182,8 @@
                                                 <Link
                                                     :href="route('items.edit', item)"
                                                     class="
-                                                        text-indigo-600
-                                                        hover:text-indigo-900
+                                                        text-teal-600
+                                                        hover:text-teal-900
                                                     "
                                                     >{{
                                                         $t("Edit")
@@ -223,7 +226,7 @@
                         focus:outline-none
                         focus:ring-2
                         focus:ring-offset-2
-                        focus:ring-indigo-500
+                        focus:ring-teal-500
                     "
                 >
                     <svg
@@ -255,11 +258,15 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from '@inertiajs/inertia-vue3'
 import TailwindPaginator from "../../components/TailwindPaginator.vue";
+import SiteAlert from "@/components/SiteAlert";
+import Alert from "@/components/Alert";
 export default defineComponent({
     props: {
         items: Array,
     },
     components: {
+        Alert,
+        SiteAlert,
         AppLayout,
         Link,
         TailwindPaginator

@@ -103,6 +103,10 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
+
+        if($item->invoiceItems()->count() > 0){
+            return redirect()->back()->withErrors(trans("item {$item->name} has previous invoices"));
+        }
         $item->delete();
 
         return redirect()->back();
