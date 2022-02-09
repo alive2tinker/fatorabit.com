@@ -76,7 +76,7 @@
                                                 </li>
                                             </ul>
                                             <div class="rounded-md shadow">
-                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment">{{ $t(' Get started ') }}</a>
+                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment(500)">{{ $t(' Get started ') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +145,7 @@
                                                 </li>
                                             </ul>
                                             <div class="rounded-md shadow">
-                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment">{{ $t(' Get started ') }}</a>
+                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment(880)">{{ $t(' Get started ') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -202,16 +202,16 @@
                 -->
                 <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                     <div>
-                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-teal-100">
                             <!-- header -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
+                            </svg>
                         </div>
                         <div class="mt-3 text-center sm:mt-5">
                             <div class="moyasar-payment"></div>
                         </div>
-                    </div>
-                    <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Deactivate</button>
-                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -221,6 +221,7 @@
 
 <script>
 import AppLayout from "../../Layouts/AppLayout";
+import axios from 'axios'
 export default {
     name: "Upgrade",
     components: {AppLayout},
@@ -230,7 +231,56 @@ export default {
         }
     },
     methods:{
-        initPayment(){
+        initPayment(amount){
+            Moyasar.init({
+                // Required
+                // Specify where to render the form
+                // Can be a valid CSS selector and a reference to a DOM element
+                element: '.moyasar-payment',
+
+                // Required
+                // Amount in the smallest currency unit
+                // For example:
+                // 10 SAR = 10 * 100 Halalas
+                // 10 KWD = 10 * 1000 Fils
+                // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
+                amount: amount * 100,
+
+                // Required
+                // Currency of the payment transation
+                currency: 'SAR',
+
+                // Required
+                // A small description of the current payment process
+                description: this.$t('fatorabit bit subscription payment'),
+
+                // Required
+                publishable_api_key: 'pk_test_sa2YmcqYnuzb1LFbax2GRRKqGEuoipbunznYP8Vc',
+
+                // Required
+                // This URL is used to redirect the user when payment process has completed
+                // Payment can be either a success or a failure, which you need to verify on you system (We will show this in a couple of lines)
+                callback_url: 'https://fatorabit.com.test/confirm-payment',
+
+                // Optional
+                // Required payments methods
+                // Default: ['creditcard', 'applepay', 'stcpay']
+                methods: [
+                    'creditcard',
+                ],
+                on_complete: function(payment){
+                    return new Promise((resolve, reject) => {
+                        axios.post(route('payment.save', {
+                            payment: payment,
+                            user: this.$page.props.user
+                        })).then(() => {
+                            resolve();
+                        }).catch(() => {
+                            reject();
+                        })
+                    })
+                }
+            });
             this.paymentModalOpen = true;
         }
     }

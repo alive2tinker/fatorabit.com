@@ -7,6 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -59,6 +61,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             'phpVersion' => PHP_VERSION,
         ]);
     });
+
+    Route::get('confirm-payment', function(Request $request) {
+        dd($request);
+    });
+
+    Route::post('save-payment', function(Request $request) {
+        Log::debug('save payment request', (array) $request);
+        return repsonse()->json([], 200);
+    })->name('payment.save');
 
     Route::middleware('auth:sanctum')->get('/subscriptions/upgrade', [\App\Http\Controllers\SubscriptionController::class, 'upgrade'])->name('subscriptions.upgrade');
 
