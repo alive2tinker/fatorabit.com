@@ -57,6 +57,9 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
+        if(!Auth::user()->can('create', Invoice::class)){
+            return redirect()->back()->withErrors('invalid subscription');
+        }
         DB::transaction(function () use ($request) {
             $customer = null;
             if($request->has('customerId') && is_numeric($request->input('customerId'))){
@@ -168,10 +171,14 @@ class InvoiceController extends Controller
     public function printPdf(Invoice $invoice)
     {
         //new code
-        $filename = $invoice->toContact . " invoice";
+        $filename = $invoice->customer->phone . " invoice";
 
         Browsershot::url(route('invoices.print', $invoice->uuid))
         ->noSandbox()
+            ->setNodeBinary('/usr/bin/node')
+//            ->setNodeModulePath('/var/www/html/fatorabit.com.test/node_modules')
+            ->setIncludePath('/usr/bin/')
+            ->setNpmBinary('/usr/bin/npm')
         ->waitUntilNetworkIdle()
         ->save(storage_path("app/invoices/$filename.pdf"));
 
