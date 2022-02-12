@@ -180,8 +180,6 @@ class InvoiceController extends Controller
 
         Browsershot::url(route('invoices.print', $invoice->uuid))
             ->noSandbox()
-            ->setNodeBinary('../../../../../bin/nodejs/node-v14')
-            ->setNodeModulePath('../../../node_modules')
             ->waitUntilNetworkIdle()
             ->save(storage_path("app/invoices/$filename.pdf"));
 
