@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChangeLocaleController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PostController;
@@ -39,6 +40,7 @@ use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
 use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Jetstream;
+use Spatie\Activitylog\Models\Activity;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('confirm-payment', function(Request $request) {
         dd($request);
     });
+
+    Route::resource('contacts', ContactController::class);
 
     Route::post('save-payment', function(Request $request) {
         Log::debug('save payment request', (array) $request);
@@ -93,7 +97,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                     'stat' => Auth::user()->items->count()
                 ]
             ],
-            'posts' => PostResource::collection(Post::with('user','categories')->orderby('created_at','desc')->get())
+            'activities' => Activity::with('causer')->where('causer_id', Auth::user()->id)->get()
         ]);
     })->name('dashboard');
 

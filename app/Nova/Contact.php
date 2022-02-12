@@ -4,20 +4,16 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Kraftbit\NovaTinymce5Editor\NovaTinymce5Editor;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Image;
 
-class Post extends Resource
+class Contact extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Post::class;
+    public static $model = \App\Models\Contact::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,7 +28,7 @@ class Post extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','name','email','phone'
     ];
 
     /**
@@ -45,11 +41,6 @@ class Post extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('title'), 'title'),
-            NovaTinymce5Editor::make('Body', 'body'),
-            Image::make('thumbnail')->disk('public'),
-            BelongsTo::make(__('User'))
-
         ];
     }
 

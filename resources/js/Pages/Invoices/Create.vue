@@ -924,9 +924,9 @@ export default defineComponent({
             item.quantity = event.target.value;
             if (item.item.unitPrice) {
                 let subtotal =
-                    parseInt(item.item.unitPrice) * event.target.value;
+                    parseFloat(item.item.unitPrice) * event.target.value;
                 let vat =
-                    parseInt(item.item.unitPrice) * event.target.value * 0.15;
+                    parseFloat(item.item.unitPrice) * event.target.value * 0.15;
                 let total = subtotal + (item.item.vatInclusive !== 'inclusive' ? vat : 0);
 
                 item.subtotal = subtotal;

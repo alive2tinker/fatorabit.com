@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "alive2tinker/transwire": "dev-main",
+        "bolechen/nova-activitylog": "^0.3.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.4.3",
@@ -21,6 +22,7 @@
         "mcamara/laravel-localization": "^1.6",
         "salla/zatca": "^1.0",
         "spatie/browsershot": "^3.52",
+        "spatie/laravel-activitylog": "^4.4",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

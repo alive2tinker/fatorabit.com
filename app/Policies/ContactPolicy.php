@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class ContactPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class ItemPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role === 'admin';
+        return $user->role === "admin";
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Contact $contact)
     {
-        return $user->id === $item->user->id || $user->role === 'admin';
+        return $user->role === "admin";
     }
 
     /**
@@ -41,54 +41,54 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-        return $user->hasActiveSubscription() || $user->role === 'admin';
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Contact $contact)
     {
-        return $user->id === $item->user->id || $user->role === 'admin';
+        return $user->role === "admin";
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Contact $contact)
     {
-        return $user->id === $item->user->id || $user->role === 'admin';
+        return $user->role === "admin";
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, Contact $contact)
     {
-        //
+        return $user->role === "admin";
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, Contact $contact)
     {
-        //
+        return $user->role === "admin";
     }
 }

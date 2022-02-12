@@ -1,579 +1,528 @@
+<!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  const colors = require('tailwindcss/colors')
+  
+  module.exports = {
+    // ...
+    theme: {
+      extend: {
+        colors: {
+          teal: colors.teal,
+          cyan: colors.cyan,
+        },
+      },
+    },
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+      require('@tailwindcss/aspect-ratio'),
+    ],
+  }
+  ```
+-->
 <template>
-    <Head title="Welcome" />
-
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <div
-        v-if="showModal"
-        class="fixed z-10 inset-0 overflow-y-auto"
-        aria-labelledby="modal-title"
-        role="dialog"
-        aria-modal="true"
+        class="bg-white"
+        :dir="$page.props.locale === 'العربية' ? 'rtl' : 'ltr'"
     >
-        <div
-            class="
-                flex
-                items-end
-                justify-center
-                min-h-screen
-                pt-4
-                px-4
-                pb-20
-                text-center
-                sm:block sm:p-0
-            "
-        >
-            <!--
-      Background overlay, show/hide based on modal state.
-
-      Entering: "ease-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
-            <div
-                class="
-                    fixed
-                    inset-0
-                    bg-gray-500 bg-opacity-75
-                    transition-opacity
-                "
-                aria-hidden="true"
-            ></div>
-
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span
-                class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="true"
-            >&#8203;</span
-            >
-
-            <!--
-      Modal panel, show/hide based on modal state.
-
-      Entering: "ease-out duration-300"
-        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        To: "opacity-100 translate-y-0 sm:scale-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100 translate-y-0 sm:scale-100"
-        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-    -->
-            <div
-                class="
-                    inline-block
-                    align-bottom
-                    bg-white
-                    rounded-lg
-                    px-4
-                    pt-5
-                    pb-4
-                    text-left
-                    overflow-hidden
-                    shadow-xl
-                    transform
-                    transition-all
-                    sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6
-                "
-            >
-                <div>
-                    <div
-                        class="
-                            mx-auto
-                            flex
-                            items-center
-                            justify-center
-                            h-12
-                            w-12
-                            rounded-full
-                            bg-green-100
-                        "
+        <div class="relative overflow-hidden">
+            <Popover as="header" class="relative">
+                <div class="bg-gray-900 pt-6">
+                    <nav
+                        class="relative max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6"
+                        aria-label="Global"
                     >
-                        <!-- Heroicon name: outline/check -->
-                        <svg
-                            class="w-8 h-8"
-                            version="1.1"
-                            id="Layer_1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            x="0px"
-                            y="0px"
-                            viewBox="0 0 308 308"
-                            style="enable-background: new 0 0 308 308"
-                            xml:space="preserve"
+                        <div class="flex items-center flex-1">
+                            <div
+                                class="flex items-center justify-between w-full md:w-auto"
+                            >
+                                <a href="#">
+                                    <application-logo color="teal-500" />
+                                </a>
+                                <div class="-mr-2 flex items-center md:hidden">
+                                    <PopoverButton
+                                        class="bg-gray-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus-ring-inset focus:ring-white"
+                                    >
+                                        <span class="sr-only"
+                                            >Open main menu</span
+                                        >
+                                        <MenuIcon
+                                            class="h-6 w-6"
+                                            aria-hidden="true"
+                                        />
+                                    </PopoverButton>
+                                </div>
+                            </div>
+                            <div
+                                class="hidden space-x-8 rtl:ps-2 md:flex md:ml-10"
+                            >
+                                <a
+                                    v-for="item in navigation"
+                                    :key="item.name"
+                                    :href="item.href"
+                                    class="text-base px-4 font-medium text-white hover:text-gray-300"
+                                    >{{ $t(item.name) }}</a
+                                >
+                            </div>
+                        </div>
+                        <div
+                            v-if="canLogin"
+                            class="hidden md:flex md:items-center md:space-x-6"
                         >
-                            <g id="XMLID_468_">
-                                <path
-                                    id="XMLID_469_"
-                                    d="M227.904,176.981c-0.6-0.288-23.054-11.345-27.044-12.781c-1.629-0.585-3.374-1.156-5.23-1.156
-		c-3.032,0-5.579,1.511-7.563,4.479c-2.243,3.334-9.033,11.271-11.131,13.642c-0.274,0.313-0.648,0.687-0.872,0.687
-		c-0.201,0-3.676-1.431-4.728-1.888c-24.087-10.463-42.37-35.624-44.877-39.867c-0.358-0.61-0.373-0.887-0.376-0.887
-		c0.088-0.323,0.898-1.135,1.316-1.554c1.223-1.21,2.548-2.805,3.83-4.348c0.607-0.731,1.215-1.463,1.812-2.153
-		c1.86-2.164,2.688-3.844,3.648-5.79l0.503-1.011c2.344-4.657,0.342-8.587-0.305-9.856c-0.531-1.062-10.012-23.944-11.02-26.348
-		c-2.424-5.801-5.627-8.502-10.078-8.502c-0.413,0,0,0-1.732,0.073c-2.109,0.089-13.594,1.601-18.672,4.802
-		c-5.385,3.395-14.495,14.217-14.495,33.249c0,17.129,10.87,33.302,15.537,39.453c0.116,0.155,0.329,0.47,0.638,0.922
-		c17.873,26.102,40.154,45.446,62.741,54.469c21.745,8.686,32.042,9.69,37.896,9.69c0.001,0,0.001,0,0.001,0
-		c2.46,0,4.429-0.193,6.166-0.364l1.102-0.105c7.512-0.666,24.02-9.22,27.775-19.655c2.958-8.219,3.738-17.199,1.77-20.458
-		C233.168,179.508,230.845,178.393,227.904,176.981z"
-                                />
-                                <path
-                                    id="XMLID_470_"
-                                    d="M156.734,0C73.318,0,5.454,67.354,5.454,150.143c0,26.777,7.166,52.988,20.741,75.928L0.212,302.716
-		c-0.484,1.429-0.124,3.009,0.933,4.085C1.908,307.58,2.943,308,4,308c0.405,0,0.813-0.061,1.211-0.188l79.92-25.396
-		c21.87,11.685,46.588,17.853,71.604,17.853C240.143,300.27,308,232.923,308,150.143C308,67.354,240.143,0,156.734,0z
-		 M156.734,268.994c-23.539,0-46.338-6.797-65.936-19.657c-0.659-0.433-1.424-0.655-2.194-0.655c-0.407,0-0.815,0.062-1.212,0.188
-		l-40.035,12.726l12.924-38.129c0.418-1.234,0.209-2.595-0.561-3.647c-14.924-20.392-22.813-44.485-22.813-69.677
-		c0-65.543,53.754-118.867,119.826-118.867c66.064,0,119.812,53.324,119.812,118.867
-		C276.546,215.678,222.799,268.994,156.734,268.994z"
-                                />
-                            </g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                            <g></g>
-                        </svg>
+                            <Link
+                                v-if="$page.props.user"
+                                :href="route('dashboard')"
+                                class="text-sm text-white underline"
+                            >
+                                {{ $t('Dashboard')}}
+                            </Link>
+                            <template v-else>
+                                <a
+                                    :href="route('login')"
+                                    class="text-base font-medium text-white hover:text-gray-300 rtl:me-4"
+                                >
+                                    {{ $t("Log in") }}
+                                </a>
+                                <a
+                                    :href="route('register')"
+                                    class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
+                                >
+                                    {{ $t("Start free trial") }}
+                                </a>
+                            </template>
+                        </div>
+                    </nav>
+                </div>
+
+                <transition
+                    enter-active-class="duration-150 ease-out"
+                    enter-from-class="opacity-0 scale-95"
+                    enter-to-class="opacity-100 scale-100"
+                    leave-active-class="duration-100 ease-in"
+                    leave-from-class="opacity-100 scale-100"
+                    leave-to-class="opacity-0 scale-95"
+                >
+                    <PopoverPanel
+                        focus
+                        class="absolute top-0 inset-x-0 p-2 transition transform origin-top md:hidden"
+                    >
+                        <div
+                            class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
+                        >
+                            <div
+                                class="px-5 pt-4 flex items-center justify-between"
+                            >
+                                <div>
+                                    <img
+                                        class="h-8 w-auto"
+                                        src="https://tailwindui.com/img/logos/workflow-mark-teal-500-cyan-600.svg"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="-mr-2">
+                                    <PopoverButton
+                                        class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-600"
+                                    >
+                                        <span class="sr-only">Close menu</span>
+                                        <XIcon
+                                            class="h-6 w-6"
+                                            aria-hidden="true"
+                                        />
+                                    </PopoverButton>
+                                </div>
+                            </div>
+                            <div class="pt-5 pb-6">
+                                <div class="px-2 space-y-1">
+                                    <a
+                                        v-for="item in navigation"
+                                        :key="item.name"
+                                        :href="item.href"
+                                        class="block pe-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50"
+                                        >{{ item.name }}</a
+                                    >
+                                </div>
+                                <div class="mt-6 px-5">
+                                    <a
+                                        href="#"
+                                        class="block text-center w-full py-3 px-4 rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-medium hover:from-teal-600 hover:to-cyan-700"
+                                        >Start free trial</a
+                                    >
+                                </div>
+                                <div class="mt-6 px-5">
+                                    <p
+                                        class="text-center text-base font-medium text-gray-500"
+                                    >
+                                        {{ $t("Existing customer?") }}
+                                        <a
+                                            href="#"
+                                            class="text-gray-900 hover:underline"
+                                            >{{ $t("Login") }}</a
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </PopoverPanel>
+                </transition>
+            </Popover>
+            <main>
+                <div
+                    class="pt-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden"
+                >
+                    <div class="mx-auto max-w-7xl lg:px-8">
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+                            <div
+                                class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center"
+                            >
+                                <div class="lg:py-24">
+                                    <h1
+                                        class="mt-4 text-4xl rtl:Text-right tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"
+                                    >
+                                        <span class="block rtl:text-right">{{
+                                            $t("A better way to")
+                                        }}</span>
+                                        <span
+                                            class="pb-3 block bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-cyan-400 sm:pb-5 rtl:text-right"
+                                            >{{
+                                                $t("Electronic Invoicing")
+                                            }}</span
+                                        >
+                                    </h1>
+                                    <p
+                                        class="text-base text-gray-300 sm:text-xl lg:text-lg xl:text-xl rtl:text-right"
+                                    >
+                                        {{
+                                            $t(
+                                                "we offer the best in class service to invoice your customers with the billables and make sure it meets requirements of ZATCA"
+                                            )
+                                        }}
+                                    </p>
+                                    <div class="mt-10 sm:mt-12"></div>
+                                </div>
+                            </div>
+                            <div
+                                class="mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative"
+                            >
+                                <div
+                                    class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0"
+                                >
+                                    <!-- Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ -->
+                                    <img
+                                        class="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                                        src="https://tailwindui.com/img/component-images/cloud-illustration-teal-cyan.svg"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mt-3 text-center sm:mt-5">
-                        <h3
-                            class="text-lg leading-6 font-medium text-gray-900"
-                            id="modal-title"
-                        >
-                            {{ $t("Ways to contact") }}
-                        </h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500">
+                </div>
+
+                <!-- Feature section with screenshot -->
+                <div class="relative bg-gray-50 pt-16 sm:pt-24 lg:pt-32">
+                    <div
+                        class="mx-auto max-w-md px-4 text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl"
+                    >
+                        <div>
+                            <h2
+                                class="text-base font-semibold tracking-wider text-cyan-600 uppercase"
+                            >
+                                {{ $t("Cloud Invoicing") }}
+                            </h2>
+                            <p
+                                class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl"
+                            >
+                                {{ $t("Anytime, Anywhere") }}
+                            </p>
+                            <p
+                                class="mt-5 max-w-prose mx-auto text-xl text-gray-500"
+                            >
                                 {{
                                     $t(
-                                        "you can reach us via whatsapp: 966548226392 or via email at admin@fatorabit.com"
+                                        "Cloud invoicing ensures your ability to invoice your clients anytime anywhere, and the availability of your data all the time."
                                     )
                                 }}
                             </p>
                         </div>
-                    </div>
-                </div>
-                <div class="mt-5 sm:mt-6">
-                    <button
-                        @click="showModal=false"
-                        type="button"
-                        class="
-                            inline-flex
-                            justify-center
-                            w-full
-                            rounded-md
-                            border border-transparent
-                            shadow-sm
-                            px-4
-                            py-2
-                            bg-teal-600
-                            text-base
-                            font-medium
-                            text-white
-                            hover:bg-teal-700
-                            focus:outline-none
-                            focus:ring-2
-                            focus:ring-offset-2
-                            focus:ring-teal-500
-                            sm:text-sm
-                        "
-                    >
-                        {{ $t("Close") }}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div
-        :dir="$page.props.locale === 'العربية' ? 'rtl' : 'ltr'"
-        class="
-            font-cairo
-            relative
-            flex
-            items-top
-            justify-center
-            min-h-screen
-            bg-gray-100
-            dark:bg-gray-900
-            sm:items-center sm:pt-0
-        "
-    >
-        <div
-            v-if="canLogin"
-            class="hidden fixed top-0 right-0 px-6 py-4 sm:block"
-        >
-            <Link
-                v-if="$page.props.user"
-                :href="route('dashboard')"
-                class="text-sm text-gray-700 underline"
-            >
-                Dashboard
-            </Link>
-
-            <template v-else>
-                <Link
-                    :href="route('login')"
-                    class="text-sm text-gray-700 rtl:ms-2 underline"
-                >
-                    {{ $t("Log in") }}
-                </Link>
-
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    class="ml-4 rtl:ms-2 text-sm text-gray-700 underline"
-                >
-                    {{ $t("Register") }}
-                </Link>
-            </template>
-            <a
-                class="text-sm text-gray-700 mx-2"
-                v-if="$page.props.locale === 'English'"
-                :href="localizedUrl('ar')"
-            >العربية</a
-            >
-            <a
-                class="text-sm text-gray-700 mx-2"
-                v-if="$page.props.locale === 'العربية'"
-                :href="localizedUrl('en')"
-            >English</a
-            >
-        </div>
-
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                <application-logo />
-            </div>
-
-            <div class="sm:hidden py-4 w-full flex px-4">
-                <Link :href="route('login')" class="bg-teal-500 text-white px-4 py-2 w-full text-center rounded">{{ $t('Log in') }}</Link>
-            </div>
-            <div
-                class="
-                    mt-8
-                    bg-white
-                    dark:bg-gray-800
-                    overflow-hidden
-                    shadow
-                    sm:rounded-lg
-                "
-            >
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                                />
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold">
-                                <p
-                                    class="
-                                        rtl:ms-3
-                                        text-gray-900
-                                        dark:text-white
-                                    "
-                                >
-                                    {{
-                                        $t("Compatible with ZATCA Requirements")
-                                    }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div
-                                class="
-                                    mt-2
-                                    text-gray-600
-                                    dark:text-gray-400
-                                    text-sm
-                                "
-                            >
-                                {{
-                                    $t(
-                                        "Electronic invoicing will be applied in two phases, the first phase “issuance phase” will be applied from December 4, 2021 AD to all taxpayers registered in VAT (excluding taxpayers who are not residing in the Kingdom) and whoever acts on behalf of the taxpayer to issue the invoice. Issuing electronic invoices will be similar to issuing invoices today, but through a compatible electronic billing system and the invoice will include all the required items based on the type of invoice"
-                                    )
-                                }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="
-                            p-6
-                            border-t border-gray-200
-                            dark:border-gray-700
-                            md:border-t-0 md:border-l
-                        "
-                    >
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
-                                />
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a
-                                    href="#"
-                                    class="
-                                        rtl:ms-3
-                                        text-gray-900
-                                        dark:text-white
-                                    "
-                                >{{
-                                        $t(
-                                            "Your Invoices are safe and sound, FOREVER!"
-                                        )
-                                    }}</a
-                                >
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div
-                                class="
-                                    mt-2
-                                    text-gray-600
-                                    dark:text-gray-400
-                                    text-sm
-                                "
-                            >
-                                {{
-                                    $t(
-                                        "We utilize the latest and greatest technologies in database and file storage system. we store your invoices with Amazon's AWS S3 and backups are being made hourly so you never lose a single piece of information"
-                                    )
-                                }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="
-                            p-6
-                            border-t border-gray-200
-                            dark:border-gray-700
-                        "
-                    >
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                                ></path>
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a
-                                    href="#"
-                                    class="
-                                        rtl:ms-3
-                                        text-gray-900
-                                        dark:text-white
-                                    "
-                                >{{
-                                        $t(
-                                            "Instant notifications to your customers by email and text messages"
-                                        )
-                                    }}</a
-                                >
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div
-                                class="
-                                    mt-2
-                                    text-gray-600
-                                    dark:text-gray-400
-                                    text-sm
-                                "
-                            >
-                                {{
-                                    $t(
-                                        "If you want to send instant notifications to your customers by email or text messages, you can certainly do so, but you must subscribe to the packages that include this service"
-                                    )
-                                }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="
-                            p-6
-                            border-t border-gray-200
-                            dark:border-gray-700
-                            md:border-l
-                        "
-                    >
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                />
-                            </svg>
-
-                            <div
-                                class="
-                                    rtl:ms-3
-                                    ml-4
-                                    text-lg
-                                    leading-7
-                                    font-semibold
-                                    text-gray-900
-                                    dark:text-white
-                                "
-                            >
-                                {{ $t("Available As an API") }}
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div
-                                class="
-                                    mt-2
-                                    text-gray-600
-                                    dark:text-gray-400
-                                    text-sm
-                                "
-                            >
-                                {{
-                                    $t(
-                                        "If I have an existing application or website, you can benefit from our services through the API. Terms and conditions apply"
-                                    )
-                                }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="
-                    flex
-                    justify-center
-                    mt-4
-                    sm:items-center sm:justify-between
-                "
-            >
-                <div class="text-center text-sm text-gray-500 sm:text-left">
-                    <div class="flex items-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                        <div class="mt-12 -mb-10 sm:-mb-24 lg:-mb-80">
+                            <img
+                                class="rounded-lg shadow-xl ring-1 ring-black ring-opacity-5"
+                                :src="PrimePhoto"
+                                alt=""
                             />
-                        </svg>
-
-                        <a @click="showModal = true" class="ml-1 underline">
-                            {{ $t("Contact") }}
-                        </a>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Feature section with grid -->
                 <div
-                    class="
-                        ml-4
-                        text-center text-sm text-gray-500
-                        sm:text-right sm:ml-0
-                    "
-                ></div>
-            </div>
+                    class="relative bg-white py-16 sm:py-24 lg:py-32"
+                    id="features"
+                >
+                    <div
+                        class="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl"
+                    >
+                        <h2
+                            class="text-base font-semibold tracking-wider text-cyan-600 uppercase"
+                        >
+                            {{ $t("All Features") }}
+                        </h2>
+                        <p
+                            class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl"
+                        >
+                            {{ $t("Everything you need for invoicing") }}
+                        </p>
+                        <p
+                            class="mt-5 max-w-prose mx-auto text-xl text-gray-500"
+                        >
+                            {{
+                                $t(
+                                    "from QR requirements to Full blown API to integrate with your existing systems, we got you covered!"
+                                )
+                            }}
+                        </p>
+                        <div class="mt-12">
+                            <div
+                                class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+                            >
+                                <div
+                                    v-for="feature in features"
+                                    :key="feature.name"
+                                    class="pt-6"
+                                >
+                                    <div
+                                        class="flow-root bg-gray-50 rounded-lg px-6 pb-8"
+                                    >
+                                        <div class="-mt-6">
+                                            <div>
+                                                <span
+                                                    class="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg"
+                                                >
+                                                    <component
+                                                        :is="feature.icon"
+                                                        class="h-6 w-6 text-white"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                            </div>
+                                            <h3
+                                                class="mt-8 text-lg font-medium text-gray-900 tracking-tight"
+                                            >
+                                                {{ $t(feature.name) }}
+                                            </h3>
+                                            <p
+                                                class="mt-5 text-base text-gray-500"
+                                            >
+                                                {{ $t(feature.description) }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial section -->
+                <div
+                    class="pb-16 bg-gradient-to-r from-teal-500 to-cyan-600 lg:pb-0 lg:z-10 lg:relative"
+                >
+                    <div
+                        class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-8"
+                    >
+                        <div class="relative lg:-my-8">
+                            <div
+                                aria-hidden="true"
+                                class="absolute inset-x-0 top-0 h-1/2 bg-white lg:hidden"
+                            />
+                            <div
+                                class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:p-0 lg:h-full"
+                            >
+                                <div
+                                    class="aspect-w-10 aspect-h-6 rounded-xl shadow-xl overflow-hidden sm:aspect-w-16 sm:aspect-h-7 lg:aspect-none lg:h-full"
+                                >
+                                    <img
+                                        class="object-cover lg:h-full lg:w-full"
+                                        :src="spicePhoto"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-12 lg:m-0 lg:col-span-2 lg:pl-8">
+                            <div
+                                class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:px-0 lg:py-20 lg:max-w-none"
+                            >
+                                <blockquote>
+                                    <div>
+                                        <svg
+                                            class="h-12 w-12 text-white opacity-25"
+                                            fill="currentColor"
+                                            viewBox="0 0 32 32"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z"
+                                            />
+                                        </svg>
+                                        <p
+                                            class="mt-6 text-2xl font-medium text-white"
+                                        >
+                                            فاتورة بت ساعدنا على تلبية متطلبات هيئة الزكاة والضريبة والجمارك بكل سهولة واريحية وغطى كافة متطلباتنا لنظام فوترة الكترونية
+                                        </p>
+                                    </div>
+                                    <footer class="mt-6">
+                                        <p
+                                            class="text-base font-medium text-white"
+                                        >
+                                            محمد علي
+                                        </p>
+                                        <p
+                                            class="text-base font-medium text-cyan-100"
+                                        >
+                                            مالك لمتجر بهارات
+                                        </p>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Section -->
+                <pricing-section id="pricing" />
+
+                <!-- Contact Us Section -->
+                <contact-section id="contact-us"></contact-section>
+            </main>
+            <footer class="bg-gray-50" aria-labelledby="footer-heading">
+                <h2 id="footer-heading" class="sr-only">Footer</h2>
+                <div
+                    class="max-w-md mx-auto pt-12 px-4 sm:max-w-7xl sm:px-6 lg:pt-16 lg:px-8"
+                >
+                    <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                        <div class="space-y-8 xl:col-span-1">
+                            <application-logo color="gray-400" />
+                            <p class="text-gray-500 text-base">
+                                {{
+                                    $t(
+                                        "Making the world a better place through constructing elegant invoicing."
+                                    )
+                                }}
+                            </p>
+                            <div class="flex space-x-6"></div>
+                        </div>
+                    </div>
+                    <div class="mt-12 border-t border-gray-200 py-8">
+                        <p class="text-base text-gray-400 xl:text-center">
+                            &copy;
+                            {{ $t("Fatorabit, Inc. All rights reserved.") }}
+                        </p>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import ApplicationLogo from "../Jetstream/ApplicationLogo.vue";
+import { defineComponent, h } from "vue";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import {
+    GlobeIcon,
+    TerminalIcon,
+    DocumentIcon,
+    MenuIcon,
+    RefreshIcon,
+    ServerIcon,
+    ShieldCheckIcon,
+    XIcon,
+    QrcodeIcon,
+} from "@heroicons/vue/outline";
+import { ChevronRightIcon, ExternalLinkIcon } from "@heroicons/vue/solid";
+import ApplicationLogo from "@/components/ApplicationLogo";
+import PricingSection from "@/components/PricingSection";
+import ContactSection from "@/components/ContactSection";
+import { Link } from '@inertiajs/inertia-vue3'
+import PrimePhoto from '@/assets/images/primePhoto.png';
+import spicePhoto from '@/assets/images/spices.jpeg';
 
-export default defineComponent({
-    components: {
-        Head,
-        Link,
-        ApplicationLogo,
+const navigation = [
+    { name: "Features", href: "#features" },
+    { name: "Pricing", href: "#pricing" },
+    { name: "Contact Us", href: "#contact-us" },
+];
+const features = [
+    {
+        name: "Electronic Invoicing",
+        description:
+            "Electronic invoicing will be applied in two phases, the first phase “issuance phase” will be applied from December 4, 2021 AD to all taxpayers registered in VAT (excluding taxpayers who are not residing in the Kingdom) and whoever acts on behalf of the taxpayer to issue the invoice. Issuing electronic invoices will be similar to issuing invoices today, but through a compatible electronic billing system and the invoice will include all the required items based on the type of invoice",
+        icon: QrcodeIcon,
     },
+    {
+        name: "Multilingual",
+        description:
+            "So that any of your employees be able to interact with the system.",
+        icon: GlobeIcon,
+    },
+    {
+        name: "Notifications",
+        description:
+            "Our system is capable of sending emails and SMS to your clients to notify them of the new invoice.",
+        icon: RefreshIcon,
+    },
+    {
+        name: "Advanced Security",
+        description:
+            "we use state of the art encryption methods to protect your data.",
+        icon: ShieldCheckIcon,
+    },
+    {
+        name: "Powerful API",
+        description:
+            "You can integrate your existing systems with our system via our powerful and full blown API. terms and conditions apply",
+        icon: TerminalIcon,
+    },
+    {
+        name: "Database Backups",
+        description:
+            "We have backups every hour to ensure that there is nothing lost.",
+        icon: ServerIcon,
+    },
+];
 
+export default {
     props: {
         canLogin: Boolean,
         canRegister: Boolean,
         laravelVersion: String,
         phpVersion: String,
     },
-
-    data() {
+    components: {
+        Popover,
+        PopoverButton,
+        PopoverPanel,
+        ChevronRightIcon,
+        ExternalLinkIcon,
+        MenuIcon,
+        XIcon,
+        ApplicationLogo,
+        PricingSection,
+        ContactSection,
+        Link
+    },
+    setup() {
         return {
-            showModal: false,
+            navigation,
+            features,
+            PrimePhoto,
+            spicePhoto
         };
     },
-    methods: {
-        localizedUrl(locale) {
-            let urlArr = window.location.href.split("/");
-            if (urlArr[3] != "ar" && urlArr[3] != "en") {
-                urlArr.splice(3, 0, locale);
-            } else {
-                urlArr.splice(3, 1);
-            }
-            return urlArr.join("/");
-        },
-    },
-});
+};
 </script>

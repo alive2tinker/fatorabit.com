@@ -57,14 +57,14 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        if(!Auth::user()->can('create', Invoice::class)){
+        if (!Auth::user()->can('create', Invoice::class)) {
             return redirect()->back()->withErrors('invalid subscription');
         }
         DB::transaction(function () use ($request) {
             $customer = null;
-            if($request->has('customerId') && is_numeric($request->input('customerId'))){
+            if ($request->has('customerId') && is_numeric($request->input('customerId'))) {
                 $customer = Customer::find($request->input('customerId'));
-            }else{
+            } else {
                 $customer = Customer::create([
                     'name' => $request->input('customer')['name'],
                     'address' => $request->input('customer')['address'],
@@ -79,7 +79,7 @@ class InvoiceController extends Controller
                 'total' => $request->input('total'),
                 'title' => $request->input('title'),
                 'notes' => $request->input('notes'),
-                'reference' => "INV-".Carbon::now()->format('yymd-h-m'),
+                'reference' => "INV-" . Carbon::now()->format('yymd-h-m'),
                 'customer_id' => $customer->id
             ]);
 
@@ -92,6 +92,11 @@ class InvoiceController extends Controller
                     'total' => $invoiceItem['total']
                 ]);
             }
+
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($invoice)
+                ->log('edited');
         });
 
         return redirect()->route('invoices.index')->with('success', trans('Invoice created successfully'));
@@ -145,7 +150,7 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        foreach($invoice->items as $invoiceItem){
+        foreach ($invoice->items as $invoiceItem) {
             $invoiceItem->delete();
         }
         $invoice->delete();
@@ -174,13 +179,11 @@ class InvoiceController extends Controller
         $filename = $invoice->customer->phone . " invoice";
 
         Browsershot::url(route('invoices.print', $invoice->uuid))
-        ->noSandbox()
-            ->setNodeBinary('/usr/bin/node')
-//            ->setNodeModulePath('/var/www/html/fatorabit.com.test/node_modules')
-            ->setIncludePath('/usr/bin/')
-            ->setNpmBinary('/usr/bin/npm')
-        ->waitUntilNetworkIdle()
-        ->save(storage_path("app/invoices/$filename.pdf"));
+            ->noSandbox()
+            ->setNodeBinary('../../../../../bin/nodejs/node-v14')
+            ->setNodeModulePath('../../../node_modules')
+            ->waitUntilNetworkIdle()
+            ->save(storage_path("app/invoices/$filename.pdf"));
 
         return Storage::disk('invoices')->download("$filename.pdf");
     }

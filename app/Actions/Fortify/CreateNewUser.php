@@ -24,8 +24,8 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'phone' => ['required'],
-            'vatRegistration' => ['required'],
+            'phone' => ['required','numeric','regex:/^05[0-9]{8}$/'],
+            'vatRegistration' => ['required', 'digits:15'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 

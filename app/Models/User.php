@@ -81,7 +81,7 @@ class User extends Authenticatable
 
     public function hasActiveSubscription()
     {
-        return $this->expiryDate < Carbon::now();
+        return $this->expiryDate->greaterThan(Carbon::now());
     }
 
     public function customers()

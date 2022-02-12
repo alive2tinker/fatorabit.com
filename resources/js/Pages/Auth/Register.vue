@@ -143,9 +143,6 @@
                 </jet-button>
             </div>
         </form>
-        <div class="flex justify-center">
-            <Link class="underline absolute mt-7" :href="route('register')">{{ $t("Already have an account? login here")}}</Link>
-        </div>
     </jet-authentication-card>
 </template>
 

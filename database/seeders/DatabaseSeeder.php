@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             'vatRegistration' => "101010542100",
             'expiryDate' => Carbon::now()->addMonths(3),
             'email' => "sufayran@gmail.com",
-            'password' => bcrypt('alive2tinker')
+            'password' => bcrypt('alive2tinker'),
+            'role' => "admin"
         ]);
     }
 }
