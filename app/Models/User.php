@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use JamesMills\Uuid\HasUuidTrait;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -18,6 +19,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasUuidTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +35,8 @@ class User extends Authenticatable
         'phone',
         'expiryDate',
         'logo',
-        'role'
+        'role',
+        'uuid'
     ];
 
     /**
@@ -92,5 +95,10 @@ class User extends Authenticatable
     public function getInvoiceCountAttribute()
     {
         return $this->invoices()->count();
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

@@ -211,6 +211,8 @@
                         </div>
                         <div class="mt-3 text-center sm:mt-5">
                             <div class="moyasar-payment"></div>
+                            <p>{{ $page.props.user.uuid }}</p>
+                            <input type="hidden" :value="$page.props.user.uuid" id="userUUID">
                         </div>
                     </div>
                 </div>
@@ -221,8 +223,10 @@
 
 <script>
 import AppLayout from "../../Layouts/AppLayout";
-import axios from 'axios'
-export default {
+import { defineComponent } from 'vue'
+import axios from 'axios';
+
+export default defineComponent({
     name: "Upgrade",
     components: {AppLayout},
     data(){
@@ -268,23 +272,25 @@ export default {
                 methods: [
                     'creditcard',
                 ],
-                on_complete: function(payment){
-                    return new Promise((resolve, reject) => {
-                        axios.post(route('payment.save', {
-                            payment: payment,
-                            user: this.$page.props.user
-                        })).then(() => {
-                            resolve();
-                        }).catch(() => {
+                language: 'ar',
+                on_completed: function(payment){
+                    let uuid = document.getElementById('userUUID').value;
+                    console.log(`from inside on_completed: ${uuid}`)
+                    return new Promise(function (resolve, reject) {
+                        // This is just an example, provide anything you want here
+                        axios.post('https://fatorabit.com.test/api/save-payment', {payment: payment, user: uuid
+                            }).then(() => {
+                            resolve({})
+                        }).catch((error) => {
                             reject();
                         })
-                    })
+                    });
                 }
             });
             this.paymentModalOpen = true;
         }
     }
-}
+});
 </script>
 
 <style scoped>

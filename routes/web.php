@@ -6,6 +6,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PostController;
 use App\Http\Resources\PostResource;
+use App\Models\Payment;
 use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -65,15 +66,31 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });
 
     Route::get('confirm-payment', function(Request $request) {
-        dd($request);
+        $payment = \App\Models\Payment::whereJSONContains('source->gateway_id', $request->input('id'))->first();
+        $payment->update([
+            'status' => $request->input('status')
+        ]);
+
+        $payment->user()->update([
+            'type' => 'premium'
+        ]);
+
+        return redirect()->route('payment-confirmed', ['payment' => $payment->id]);
     });
+
+    Route::get('/payment/{payment}/confirmed', function(Payment $payment){
+      return Inertia::render('PaymentReceived', [
+        'payment' => $payment
+      ]);
+    })->name('payment-confirmed');
 
     Route::resource('contacts', ContactController::class);
 
-    Route::post('save-payment', function(Request $request) {
-        Log::debug('save payment request', (array) $request);
-        return repsonse()->json([], 200);
-    })->name('payment.save');
+    Route::get('payment-confirmed', function(){
+        return Inertia::render('PaymentConfirmed');
+    });
+
+
 
     Route::middleware('auth:sanctum')->get('/subscriptions/upgrade', [\App\Http\Controllers\SubscriptionController::class, 'upgrade'])->name('subscriptions.upgrade');
 

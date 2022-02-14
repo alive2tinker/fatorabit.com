@@ -17,7 +17,7 @@
         "laravel/jetstream": "^2.4",
         "laravel/nova": "~3.0",
         "laravel/sanctum": "^2.11",
-        "laravel/telescope": "^4.6",
+        "laravel/telescope": "^4.7",
         "laravel/tinker": "^2.5",
         "mcamara/laravel-localization": "^1.6",
         "salla/zatca": "^1.0",
