@@ -66,7 +66,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });
 
     Route::get('confirm-payment', function(Request $request) {
-        $payment = \App\Models\Payment::whereJSONContains('source->gateway_id', $request->input('id'))->first();
+        $payment = \App\Models\Payment::where('reference_number', $request->input('id'))->first();
         $payment->update([
             'status' => $request->input('status')
         ]);

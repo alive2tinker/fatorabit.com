@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('save-payment', function(Request $request) {
     Log::debug('request to save payment details', (array) $request->input('payment'));
     $payment = Payment::create([
-      'id' => $request->input('payment')['id'],
+      "reference_number" =>  $request->input('payment')['id'],
       'status' => $request->input('payment')['status'],
       'amount' => $request->input('payment')['amount'],
       'fee' => $request->input('payment')['fee'],
