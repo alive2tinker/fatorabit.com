@@ -64,6 +64,11 @@
                 <jet-label for="vatRegistration" value="VAT Number" />
                 <p class="text-md">{{ form.vatRegistration }}</p>
             </div>
+            <!-- Current Subscription -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="vatRegistration" value="Current Subsription" />
+                <p class="text-md">{{ $t(form.type) }}</p>
+            </div>
         </template>
 
         <template #actions>
@@ -110,6 +115,7 @@
                     phone: this.user.phone,
                     vatRegistration: this.user.vatRegistration,
                     photo: null,
+                    type: this.user.type
                 }),
 
                 photoPreview: null,

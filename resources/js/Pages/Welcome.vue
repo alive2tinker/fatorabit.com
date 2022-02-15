@@ -118,11 +118,7 @@
                                 class="px-5 pt-4 flex items-center justify-between"
                             >
                                 <div>
-                                    <img
-                                        class="h-8 w-auto"
-                                        src="https://tailwindui.com/img/logos/workflow-mark-teal-500-cyan-600.svg"
-                                        alt=""
-                                    />
+                                    <application-logo color="teal-500" />
                                 </div>
                                 <div class="-mr-2">
                                     <PopoverButton
@@ -143,14 +139,14 @@
                                         :key="item.name"
                                         :href="item.href"
                                         class="block pe-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50"
-                                        >{{ item.name }}</a
+                                        >{{ $t(item.name) }}</a
                                     >
                                 </div>
                                 <div class="mt-6 px-5">
                                     <a
-                                        href="#"
+                                        :href="route('register')"
                                         class="block text-center w-full py-3 px-4 rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-medium hover:from-teal-600 hover:to-cyan-700"
-                                        >Start free trial</a
+                                        >{{ $t('Start free trial') }}</a
                                     >
                                 </div>
                                 <div class="mt-6 px-5">
@@ -159,7 +155,7 @@
                                     >
                                         {{ $t("Existing customer?") }}
                                         <a
-                                            href="#"
+                                            :href="route('login')"
                                             class="text-gray-900 hover:underline"
                                             >{{ $t("Login") }}</a
                                         >

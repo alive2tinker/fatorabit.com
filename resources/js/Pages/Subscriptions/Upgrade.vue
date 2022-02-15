@@ -76,7 +76,7 @@
                                                 </li>
                                             </ul>
                                             <div class="rounded-md shadow">
-                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment(500)">{{ $t(' Get started ') }}</a>
+                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment(500)">{{ $t('Get started') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +145,7 @@
                                                 </li>
                                             </ul>
                                             <div class="rounded-md shadow">
-                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment(880)">{{ $t(' Get started ') }}</a>
+                                                <a href="#" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-800 hover:bg-cyan-700" aria-describedby="tier-standard" @click="initPayment(880)">{{ $t('Get started') }}</a>
                                             </div>
                                         </div>
                                     </div>
