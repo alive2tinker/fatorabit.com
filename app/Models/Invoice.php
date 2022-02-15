@@ -24,7 +24,8 @@ class Invoice extends Model
         'notes',
         'reference',
         'customer_vat',
-        'customer_id'
+        'customer_id',
+        'note_id'
     ];
 
     public function getActivitylogOptions(): LogOptions
@@ -60,5 +61,10 @@ class Invoice extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function note()
+    {
+        return $this->belongsTo(Note::class);
     }
 }

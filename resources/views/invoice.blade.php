@@ -7,6 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invoice->title }}</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            font-family: 'Cairo';
+        }
+    </style>
 </head>
 
 <body>
@@ -15,9 +22,9 @@
         <div class="my-4 flex justify-between">
             <div>
             <ul>
-                <li class="my-2">{{ $invoice->customer->name }}</li>
-                <li class="my-2">{{ $invoice->customer->address }}</li>
-                <li class="my-2">{{ $invoice->customer->phone }}</li>
+                <li class="my-2 space-x-2"><span>{{ __('Customer') }}</span><span>{{ $invoice->customer->name }}</span></li>
+                <li class="my-2 space-x-2"><span>{{ __('Address') }}</span><span>{{ $invoice->customer->address }}</span></li>
+                <li class="my-2"><span>{{ __('Phone') }}</span><span>{{ $invoice->customer->phone }}</span></li>
             </ul>
             </div>
             <div>
@@ -42,8 +49,8 @@
                 @foreach($invoice->items as $invoiceItem)
                     <tr>
                         <td class="border-l border-gray-300 text-center">
-                            <p>{{ $invoiceItem->item->nameAr }}</p>
-                            <p>{{ $invoiceItem->item->nameEn }}</p>
+                            <p>{{ $invoiceItem->item->name_ar }}</p>
+                            <p>{{ $invoiceItem->item->name }}</p>
                         </td>
                         <td class="border-l border-gray-300 text-center">{{ $invoiceItem->subtotal }}</td>
                         <td class="border-l border-gray-300 text-center">{{ $invoiceItem->vat }}</td>
@@ -66,12 +73,10 @@
                 <td class="border-b border-gray-300 py-2 text-center">{{ $invoice->total }}</td>
             </tr>
         </table>
-        <p class="my-4">{!! $invoice->notes !!}</p>
+        <p class="my-4">{!! $invoice->note->body !!}</p>
         <div class="flex justify-center">
             <img src="{{ $qrcode }}" alt="">
         </div>
-        <div class="max-w-xl mx-auto py-4 bg-gray-200 rounded-md mt-5"><p class="text-gray-600 text-center">{{ __('this invoice was created with love by') }} <a href="/">{{ __('Fatorabit') }}</a></p></div>
-        <p class="text-center mt-3">{{ __('You can view this invoice @ ')}} <a href="{{route('invoices.print', $invoice->uuid)}}">{{route('invoices.print', $invoice->uuid)}}</a></p>
     </div>
 </body>
 

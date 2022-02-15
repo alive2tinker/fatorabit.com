@@ -19,6 +19,9 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=fetch"></script>
         <script src="https://cdn.moyasar.com/mpf/1.5.4/moyasar.js"></script>
 
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
+        </style>
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>

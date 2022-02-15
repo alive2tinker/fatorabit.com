@@ -8,6 +8,7 @@ use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\ItemResource;
+use App\Models\Note;
 use Inertia\Inertia;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,7 +46,8 @@ class InvoiceController extends Controller
     {
         return Inertia::render('Invoices/Create', [
             'items' => ItemResource::collection(Auth::user()->items),
-            'customers' => Auth::user()->customers
+            'customers' => Auth::user()->customers,
+            'notes' => Auth::user()->notes
         ]);
     }
 
@@ -62,6 +64,7 @@ class InvoiceController extends Controller
         }
         DB::transaction(function () use ($request) {
             $customer = null;
+            $note = null;
             if ($request->has('customerId') && is_numeric($request->input('customerId'))) {
                 $customer = Customer::find($request->input('customerId'));
             } else {
@@ -73,12 +76,21 @@ class InvoiceController extends Controller
                     'user_id' => Auth::user()->id
                 ]);
             }
+            if($request->input('noteId') === 'new'){
+                $note = Note::create([
+                    'title' => $request->input('note')['title'],
+                    'body' => $request->input('note')['description'],
+                    'user_id' => Auth::user()->id
+                ]);
+            }else{
+                $note = Note::find($request->input('noteId'));
+            }
             $invoice = Auth::user()->invoices()->create([
                 'subtotal' => $request->input('subtotal'),
                 'vatTotal' => $request->input('vat'),
                 'total' => $request->input('total'),
                 'title' => $request->input('title'),
-                'notes' => $request->input('notes'),
+                'note_id' => $note->id,
                 'reference' => "INV-" . Carbon::now()->format('yymd-h-m'),
                 'customer_id' => $customer->id
             ]);
@@ -180,6 +192,7 @@ class InvoiceController extends Controller
 
         Browsershot::url(route('invoices.print', $invoice->uuid))
             ->noSandbox()
+            ->setNodeBinary('/usr/local/bin/node')
             ->waitUntilNetworkIdle()
             ->save(storage_path("app/invoices/$filename.pdf"));
 

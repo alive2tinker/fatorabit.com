@@ -396,7 +396,7 @@
                                             v-model="newInvoiceForm.customerId"
                                         >
                                             <option v-for="(customer, index) in customers" :key="index" :value="customer.id">{{ customer.name}}</option>
-                                            <option value="new">New Customer</option>
+                                            <option value="new">{{ $t('New Customer')}}</option>
                                         </select>
                                         <p class="font-extralight text-red-500">
                                             {{ $t(errors.customerId) }}
@@ -522,35 +522,75 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="sm:col-span-2">
-                                    <label
-                                        for="email"
-                                        class="
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label
+                                    for="region"
+                                    class="
+                                            block
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            sm:mt-px sm:pt-2
+                                        "
+                                >
+                                    {{ $t("Note") }}
+                                </label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    <select
+                                        :class="{
+                                                'max-w-lg block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md': true,
+                                                'border-red-500': errors.noteId,
+                                            }"
+                                        v-model="newInvoiceForm.noteId"
+                                    >
+                                        <option v-for="(note, index) in notes" :key="index" :value="note.id">{{ note.title}}</option>
+                                        <option value="new">{{ $t('New Note')}}</option>
+                                    </select>
+                                    <p class="font-extralight text-red-500">
+                                        {{ $t(errors.noteId) }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="sm:col-span-2" v-if="newInvoiceForm.noteId === 'new' || notes.length === 0">
+                                <label
+                                    for="email"
+                                    class="
                                             block
                                             text-sm
                                             font-medium
                                             text-gray-700
                                         "
-                                        >{{ $t("Notes") }}</label
-                                    >
-                                    <div class="mt-1">
+                                >{{ $t("Note Title") }}</label
+                                >
+                                <input type="text" v-model="newInvoiceForm.note.title" :class="{
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'border-red-500':
+                                                    errors['note.title']
+                                            }"/>
+                                <label
+                                    for="email"
+                                    class="
+                                            block
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                        "
+                                >{{ $t("Note Content") }}</label
+                                >
+                                <div class="mt-1">
                                         <textarea
-                                            class="
-                                                shadow-sm
-                                                focus:ring-teal-500
-                                                focus:border-teal-500
-                                                block
-                                                w-full
-                                                sm:text-sm
-                                                border-gray-300
-                                                rounded-md
-                                            "
-                                            id=""
+                                            :class="{
+                                                'shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md': true,
+                                                'border-red-500':
+                                                    errors['note.description']
+                                            }"
                                             cols="30"
                                             rows="10"
-                                            v-model="newInvoiceForm.notes"
+                                            v-model="newInvoiceForm.note.description"
                                         ></textarea>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -825,7 +865,8 @@ export default defineComponent({
     props: {
         items: Object,
         errors: Object,
-        customers: Object
+        customers: Object,
+        notes: Object
     },
     components: {
         AppLayout,
@@ -857,7 +898,11 @@ export default defineComponent({
                     vatRegistration:"",
                 },
                 customerId: '',
-                notes: "",
+                noteId: "new",
+                note:{
+                    title: '',
+                    description: ''
+                },
                 subtotal: 0,
                 vat: 0,
                 total: 0,

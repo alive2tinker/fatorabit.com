@@ -47,6 +47,12 @@
                                 >
                                     {{ $t('Invoices') }}
                                 </jet-nav-link>
+                                <jet-nav-link
+                                    :href="route('customers.index')"
+                                    :active="route().current('customers.index')"
+                                >
+                                    {{ $t('Customers') }}
+                                </jet-nav-link>
                             </div>
                         </div>
 
@@ -491,6 +497,9 @@
                         </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('invoices.index')" :active="route().current('invoices.index')">
                             {{ $t('Invoices')}}
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('customers.index')" :active="route().current('customers.index')">
+                            {{ $t('Customers')}}
                         </jet-responsive-nav-link>
                     </div>
 

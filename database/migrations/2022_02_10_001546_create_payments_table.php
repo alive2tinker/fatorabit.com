@@ -35,6 +35,7 @@ class CreatePaymentsTable extends Migration
             $table->string('callback_url');
             $table->json('source');
             $table->foreignId('user_id');
+            $table->softDeletes();
             $table->timestamps();
 
         });

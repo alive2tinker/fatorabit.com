@@ -78,6 +78,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         return redirect()->route('payment-confirmed', ['payment' => $payment->id]);
     });
 
+    Route::resource('customers', \App\Http\Controllers\CustomerController::class);
+
     Route::get('/payment/{payment}/confirmed', function(Payment $payment){
       return Inertia::render('PaymentReceived', [
         'payment' => $payment
