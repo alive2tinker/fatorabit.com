@@ -109,7 +109,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 ],
                 [
                     'name' => "Invoices Total",
-                    'stat' => Auth::user()->invoices->sum('total')
+                    'stat' => number_format(Auth::user()->invoices->sum('total'), 2)
                 ],
                 [
                     'name' => "Items",
