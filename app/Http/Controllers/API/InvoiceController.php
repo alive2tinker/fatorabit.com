@@ -77,6 +77,18 @@ class InvoiceController extends Controller
                 'reference' => "INV-".Carbon::now()->format('yymd-h-m'),
             ]);
 
+            $invoice->update([
+                'qrcode' => GenerateQrCode::fromArray([
+                new Seller($invoice->user->name), // seller name
+                new TaxNumber($invoice->user->vatRegistration), // seller tax number
+                new InvoiceDate($invoice->created_at->format('Y-m-d\TH:i:s\Z')), // invoice date as Zulu ISO8601 @see https://en.wikipedia.org/wiki/ISO_8601
+                new InvoiceTotalAmount($invoice->total), // invoice total amount
+                new InvoiceTaxAmount($invoice->vatTotal) // invoice tax amount
+                // TODO :: Support others tags
+            ])->render()
+
+            ]);
+
             foreach ($request->input('items') as $invoiceItem) {
                 $invoice->items()->create([
                     'item_id' => $invoiceItem['item']['id'],

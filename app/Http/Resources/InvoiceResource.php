@@ -19,14 +19,16 @@ class InvoiceResource extends JsonResource
             'id' => $this->id,
             'uuid' => $this->uuid,
             'reference' => $this->reference,
-            'notes' => $this->notes,
+            'note' => $this->note,
             'subtotal' => $this->subtotal,
             'vatTotal' => $this->vatTotal,
             'total' => $this->total,
             'title' => $this->title,
             'customer' => $this->customer,
             'created' => $this->created_at->format('d/m/Y h:i:s'),
-            'items' => InvoiceItem::with('item')->where('invoice_id', $this->id)->get()
+            'items' => InvoiceItem::with('item')->where('invoice_id', $this->id)->get(),
+            'user' => $this->user,
+            'qrcode' => $this->qrcode
         ];
     }
 }

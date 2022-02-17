@@ -58,7 +58,7 @@ Route::post('save-payment', function(Request $request) {
     }
 })->name('payment.save');
 
-Route::post('/sanctum/token', function (Request $request) {
+Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
@@ -73,7 +73,13 @@ Route::post('/sanctum/token', function (Request $request) {
         ]);
     }
 
-    return $user->createToken($request->device_name)->plainTextToken;
+
+
+    // return $user->createToken($request->device_name)->plainTextToken;
+    return response()->json([
+        'user' => $user,
+        'token' => $user->createToken($request->device_name)->plainTextToken
+    ], 200);
 });
 
 Route::middleware('auth:sanctum')->resource('/invoices', InvoiceController::class);

@@ -25,7 +25,8 @@ class Invoice extends Model
         'reference',
         'customer_vat',
         'customer_id',
-        'note_id'
+        'note_id',
+        'qrcode'
     ];
 
     public function getActivitylogOptions(): LogOptions

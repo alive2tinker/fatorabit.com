@@ -92,7 +92,19 @@ class InvoiceController extends Controller
                 'title' => $request->input('title'),
                 'note_id' => $note->id,
                 'reference' => "INV-" . Carbon::now()->format('yymd-h-m'),
-                'customer_id' => $customer->id
+                'customer_id' => $customer->id,
+            ]);
+
+            $invoice->update([
+                'qrcode' => GenerateQrCode::fromArray([
+                new Seller($invoice->user->name), // seller name
+                new TaxNumber($invoice->user->vatRegistration), // seller tax number
+                new InvoiceDate($invoice->created_at->format('Y-m-d\TH:i:s\Z')), // invoice date as Zulu ISO8601 @see https://en.wikipedia.org/wiki/ISO_8601
+                new InvoiceTotalAmount($invoice->total), // invoice total amount
+                new InvoiceTaxAmount($invoice->vatTotal) // invoice tax amount
+                // TODO :: Support others tags
+            ])->render()
+
             ]);
 
             foreach ($request->input('items') as $invoiceItem) {
@@ -174,14 +186,6 @@ class InvoiceController extends Controller
     {
         return view('invoice', [
             'invoice' => $invoice,
-            'qrcode' => GenerateQrCode::fromArray([
-                new Seller($invoice->user->name), // seller name
-                new TaxNumber($invoice->user->vatRegistration), // seller tax number
-                new InvoiceDate($invoice->created_at->format('Y-m-d\TH:i:s\Z')), // invoice date as Zulu ISO8601 @see https://en.wikipedia.org/wiki/ISO_8601
-                new InvoiceTotalAmount($invoice->total), // invoice total amount
-                new InvoiceTaxAmount($invoice->vatTotal) // invoice tax amount
-                // TODO :: Support others tags
-            ])->render()
         ]);
     }
 
