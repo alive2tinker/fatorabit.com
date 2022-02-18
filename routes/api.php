@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\NoteController;
 use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\CustomerController;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+// use Auth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +28,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->post('/update-account', function(Request $request){
+    $updated = Auth::user()->update([
+        'email' => $request->input('email'),
+        'phone' => $request->input('phone')
+    ]);
+    if($updated)
+        return response()->json(Auth::user(), 200);
+    else
+        return response()->json([], 403);
+});
 
 Route::post('save-payment', function(Request $request) {
     Log::debug('request to save payment details', (array) $request->input('payment'));
@@ -84,3 +97,5 @@ Route::post('/login', function (Request $request) {
 
 Route::middleware('auth:sanctum')->resource('/invoices', InvoiceController::class);
 Route::middleware('auth:sanctum')->resource('/items', ItemController::class);
+Route::middleware('auth:sanctum')->resource('/notes', NoteController::class);
+Route::middleware('auth:sanctum')->resource('/customers', CustomerController::class);

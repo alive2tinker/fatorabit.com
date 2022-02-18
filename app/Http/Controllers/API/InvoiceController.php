@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Customer;
+use App\Models\Note;
 use App\Models\Invoice;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
@@ -22,6 +23,7 @@ use Salla\ZATCA\Tags\InvoiceTotalAmount;
 use Salla\ZATCA\Tags\Seller;
 use Salla\ZATCA\Tags\TaxNumber;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
@@ -55,18 +57,34 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        DB::transaction(function () use ($request) {
+        Log::info("here is the customerId field {$request->has('customerId')}");
+        Log::debug('here is the API customer', (array) $request->input('customer'));
+        $invoice = DB::transaction(function () use ($request) {
             $customer = null;
-            if($request->has('customerId')){
+            $note = null;
+
+            if($request->has('customerId') && is_numeric($request->input('customerId'))){
                 $customer = Customer::find($request->input('customerId'));
             }else{
                 $customer = Customer::create([
                     'name' => $request->input('customer')['name'],
                     'address' => $request->input('customer')['address'],
                     'phone' => $request->input('customer')['phone'],
-                    'vatRegistration' => $request->input('customer')['vatRegistration']
+                    'vatRegistration' => $request->input('customer')['vatRegistration'],
+                    'user_id' => Auth::user()->id
                 ]);
             }
+
+            if($request->input('noteId') === 'new'){
+                $note = Note::create([
+                    'title' => $request->input('note')['title'],
+                    'body' => $request->input('note')['description'],
+                    'user_id' => Auth::user()->id
+                ]);
+            }else{
+                $note = Note::find($request->input('noteId'));
+            }
+
             $invoice = Auth::user()->invoices()->create([
                 'subtotal' => $request->input('subtotal'),
                 'vatTotal' => $request->input('vat'),
@@ -74,7 +92,8 @@ class InvoiceController extends Controller
                 'title' => $request->input('title'),
                 'customer_id' => $customer->id,
                 'notes' => $request->input('notes'),
-                'reference' => "INV-".Carbon::now()->format('yymd-h-m'),
+                'note_id' => $note->id,
+                'reference' => "INV-".Carbon::now()->format('Y-m-dh:i:s'),
             ]);
 
             $invoice->update([
@@ -98,9 +117,14 @@ class InvoiceController extends Controller
                     'total' => $invoiceItem['total']
                 ]);
             }
+
+            return $invoice;
+
         });
 
-        return redirect()->route('invoices.index')->with('success', trans('Invoice created successfully'));
+        Log::debug('invoice details before sending back', (array) $invoice);
+
+        return response()->json($invoice, 200);
     }
 
     /**
