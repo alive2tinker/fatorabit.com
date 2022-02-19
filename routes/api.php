@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Validation\ValidationException;
 // use Auth;
 /*
@@ -71,31 +71,12 @@ Route::post('save-payment', function(Request $request) {
     }
 })->name('payment.save');
 
-Route::post('/login', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-
-
-
-    // return $user->createToken($request->device_name)->plainTextToken;
-    return response()->json([
-        'user' => $user,
-        'token' => $user->createToken($request->device_name)->plainTextToken
-    ], 200);
-});
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+Route::middleware('auth:sanctum')->post('/change-password', [App\Http\Controllers\API\AuthController::class, 'changePassword']);
 
 Route::middleware('auth:sanctum')->resource('/invoices', InvoiceController::class);
 Route::middleware('auth:sanctum')->resource('/items', ItemController::class);
 Route::middleware('auth:sanctum')->resource('/notes', NoteController::class);
 Route::middleware('auth:sanctum')->resource('/customers', CustomerController::class);
+Route::resource('contacts', App\Http\Controllers\API\ContactController::class);
