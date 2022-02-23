@@ -72,7 +72,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         ]);
 
         $payment->user()->update([
-            'type' => 'premium'
+            'type' => 'premium',
+            'expiryDate' => Carbon::now()->addMonths(12)
         ]);
 
         return redirect()->route('payment-confirmed', ['payment' => $payment->id]);
