@@ -75,7 +75,7 @@
         </table>
         <p class="my-4">{!! $invoice->note->body !!}</p>
         <div class="flex justify-center">
-            <img src="{{ $qrcode }}" alt="">
+            <img src="{{ $invoice->qrcode }}" alt="">
         </div>
     </div>
 </body>

@@ -40,11 +40,11 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         $item = Auth::user()->items()->create([
-            'name' => $request->input('item')['name_en'],
-            'name_ar' => $request->input('item')['name_ar'],
-            'unit_price' => $request->input('item')['unitPrice'],
+            'name' => $request->input('name'),
+            'name_ar' => $request->input('nameAr'),
+            'unit_price' => $request->input('unitPrice'),
             // 'vat_inclusive' => $request->input('vatInclusive'),
-            'vatInclusive' => $request->input('item')['vatInclusive']
+            'vatInclusive' => $request->input('vatInclusive')
         ]);
 
         return response()->json([

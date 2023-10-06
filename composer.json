@@ -7,15 +7,13 @@
     "require": {
         "php": "^7.3|^8.0",
         "alive2tinker/transwire": "dev-main",
-        "bolechen/nova-activitylog": "^0.3.0",
+        "doctrine/dbal": "^3.7",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.4.3",
         "jamesmills/eloquent-uuid": "^1.6",
-        "kraftbit/nova-tinymce5-editor": "^1.0",
         "laravel/framework": "^8.65",
         "laravel/jetstream": "^2.4",
-        "laravel/nova": "~3.0",
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.7",
         "laravel/tinker": "^2.5",
@@ -73,9 +71,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
-        "nova": {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        }
+        
     }
 }

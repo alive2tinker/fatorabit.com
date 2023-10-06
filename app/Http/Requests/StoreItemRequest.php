@@ -24,10 +24,10 @@ class StoreItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'item.name_en' => "required",
-            'item.name_ar' => "required",
-            'item.unitPrice' => "required|numeric",
-            'item.vatInclusive' => "required"
+            'name' => "required",
+            'nameAr' => "required",
+            'unitPrice' => "required|numeric",
+            'vatInclusive' => "required"
         ];
     }
 }
